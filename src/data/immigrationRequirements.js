@@ -149,6 +149,27 @@ export const workExperiencePoints = {
   }
 };
 
+/**
+ * Requirements for Extraordinary Ability Category 
+ */
+
+export const extraordinaryAbilityRequirements = {
+  international_awards: 'I have received major national or international awards/prizes in my field',
+  media_recognition: 'My work has been featured in major publications, media, or trade journals',
+  high_salary: 'I earn significantly above average salary in my field (top 10%)',
+  professional_membership: 'I am a member of exclusive professional associations requiring outstanding achievements',
+  peer_review: 'I have been asked to judge or review others\' work in my field',
+  original_contributions: 'I have made original contributions of major significance to my field',
+  scholarly_articles: 'I have authored scholarly articles or publications in my field',
+  leadership_role: 'I hold or have held a leadership role in distinguished organizations',
+  international_recognition: 'I am internationally recognised as a leader/expert in my field',
+  advanced_degree: 'I hold an advanced degree (Masters/PhD) or equivalent experience in my field',
+}
+
+//TODO this should set as a mutiple choice
+export const extraordinaryAbilityOptions = [
+  { value: '', label: 'Select status' },
+]
 
 // Family status options for the select input
 export const familyStatusOptions = [
