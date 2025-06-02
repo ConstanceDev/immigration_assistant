@@ -117,7 +117,7 @@ export const usaPrograms = [
                     level: ['bachelorsThreeYear', 'twoBachelors'],
                 },
                 workExperience: {
-                    yearsOfWork: 5, //At least 5 years working experience
+                    yearsOfWork: 5, //At least 5 years working experience if only has Bachelor degree
                 }
             }
         }
@@ -161,7 +161,13 @@ export const usaPrograms = [
     officialWebsite: 'https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-third-preference-eb-3',
     requirements: {
         education: {
-            level: ['bachelorsThreeYear', 'twoBachelors', 'masters', 'doctorate', 'professionalDegree'],
+            level: [
+                'bachelorsThreeYear', 
+                'twoBachelors', 
+                'masters', 
+                'doctorate', 
+                'professionalDegree'
+            ]
         }
     }
 },
@@ -205,8 +211,13 @@ export const usaPrograms = [
     officialWebsite: 'https://www.uscis.gov/working-in-the-united-states/temporary-workers/h-1b-specialty-occupations',
     requirements: {
         education: {
-            level: ['bachelorsThreeYear', 'twoBachelors', 'masters', 'doctorate', 'professionalDegree'],
-            //Bachelor\'s degree or higher in the specific specialty (or equivalent)
+            level: [
+                'bachelorsThreeYear', 
+                'twoBachelors', 
+                'masters', 
+                'doctorate', 
+                'professionalDegree'
+            ] //Bachelor\'s degree or higher in the specific specialty (or equivalent)
         }
     }
 },

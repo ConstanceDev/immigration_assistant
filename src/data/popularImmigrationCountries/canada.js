@@ -7,6 +7,7 @@ import {
     educationPoints,
     agePoints,
     workExperiencePoints,
+    languageStandards
 } from '../immigrationRequirements.js';
 
 
@@ -33,11 +34,22 @@ export const canadaPrograms = [
                 description: "At least 1 year of continuous paid work experience in the last 10 years, matched with NOC",
             },
             language: {
-                english: 'CLB7', // minimum CLB7
+                english: languageStandards.CLB.CLB7, // minimum CLB7
             },
 
             eduction: {
-                level: 'oneYearTwelve', 
+                level: [
+                    'oneYearTwelve', 
+                    'oneYearThirteen', 
+                    'twoYearDiploma', 
+                    'bachelorsThreeYear', 
+                    'threeDiploma',
+                    'twoCertificates',
+                    'twoBachelors',
+                    'professionalDegree',
+                    'masters',
+                    'doctorate'
+                ], 
                 description: 'Any above secondary education.'
             }
         },
@@ -157,10 +169,10 @@ export const canadaPrograms = [
                 //Each applicant must hold 10% or more of the total voting rights, applicants and the designated organization together must hold more than 50% of the total voting rights
             },
             language: {
-                english:'CLB5', //Minimum CLB 5 in all abilities
+                english: languageStandards.CLB.CLB5, //Minimum CLB 5 in all abilities
             },
             fundBudget: {
-                fee: 14690, //One person at least $14,690
+                fund: 14690, //One person at least $14,690
                 currency: 'CAD',
                 //TODO: needs to have currency converter
             }
@@ -197,7 +209,7 @@ export const canadaPrograms = [
             age: agePoints.selfEmployed,
 
             language: {
-                english: 'CLB7', //minimum CLB 7 in all abilities
+                english: languageStandards.CLB.CLB7, //minimum CLB 7 in all abilities
             }
         }
     }
