@@ -1,6 +1,6 @@
 /**
  * United Kingdom (UK) Immigration Programs Data
- * This file contains immigration program information for United States
+ * This file contains immigration program information for United Kingdom
  */
 
 import {
@@ -23,8 +23,10 @@ export const ukPrograms = [
         },
         workExperience: {
             jobTitle: '', //TODO need to match with occupation code
-            salary: 38700, //minimum: £38,700 per year
+            salary: {
+            min: 38700, //minimum: £38,700 per year
             currency: "GBP"
+        }
         },
     }
 },
@@ -66,7 +68,7 @@ export const ukPrograms = [
             english: languageStandards.CEFR.B2, //at least CEFR B2 level
         },
         fundBudget: {
-            fund: 50000, //At least £50,000 
+            miniFund: 50000, //At least £50,000 
             currency: "GBP"
         }
     }

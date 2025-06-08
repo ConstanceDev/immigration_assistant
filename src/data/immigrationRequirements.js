@@ -10,13 +10,13 @@
 export const languageStandards = {
 // CLB (Canadian Language Benchmarks) based on IELTS scores
    CLB: {
-    CLB10: { listening: [8, 8.5, 9, 9.5, 10], speaking: [7.5, 8, 8.5, 9, 9.5, 10], reading: [8.5, 9, 9.5, 10], writing: [7.5, 8, 8.5, 9, 9.5, 10] },
-    CLB9: { listening: 7, speaking: 7, reading: 8, writing: 7 },
-    CLB8: { listening: 6.5, speaking: 6.5, reading: 7.5, writing: 6.5 },
-    CLB7: { listening: 6, speaking: 6, reading: 6, writing: 6 },
-    CLB6: { listening: 5, speaking: 5.5, reading: 5.5, writing: 5.5 },
-    CLB5: { listening: 4, speaking: 5, reading: 5, writing: 5 },
-    CLB4: { listening: 3.5, speaking: 4, reading: 4.5, writing: 4 }
+    CLB10: { reading: [8, 8.5, 9, 9.5, 10], writing: [7.5, 8, 8.5, 9, 9.5, 10], listening: [8.5, 9, 9.5, 10], speaking: [7.5, 8, 8.5, 9, 9.5, 10] },
+    CLB9: { reading: 7, writing: 7, listening: 8, speaking: 7 },
+    CLB8: { reading: 6.5, writing: 6.5, listening: 7.5, speaking: 6.5 },
+    CLB7: { reading: 6, writing: 6, listening: 6, speaking: 6 },
+    CLB6: { reading: 5, writing: 5.5, listening: 5.5, speaking: 5.5 },
+    CLB5: { reading: 4, writing: 5, listening: 5, speaking: 5 },
+    CLB4: { reading: 3.5, writing: 4, listening: 4.5, speaking: 4 }
   },
   
   //Australia Standards
@@ -446,24 +446,3 @@ export const extraordinaryAbilityRequirements = {
 export const extraordinaryAbilityOptions = [
   { value: '', label: 'Select status' },
 ]
-
-// Family status options for the select input
-export const familyStatusOptions = [
-  { value: '', label: 'Select status' },
-  { value: 'single', label: 'Single' },
-  { value: 'married', label: 'Married/Partner' },
-  { value: 'children', label: 'With Children' }
-];
-
-// Job type options for the select input
-export const jobTypeOptions = [
-  { value: '', label: 'Select type' },
-  { value: 'professional', label: 'Professional' },
-  { value: 'skilled', label: 'Skilled Trade' },
-  { value: 'unskilled', label: 'Unskilled/Manual' },
-  { value: 'business', label: 'Business Owner' },
-  { value: 'investor', label: 'Investor' }
-];
-//TODO need to delete and change later
-
-

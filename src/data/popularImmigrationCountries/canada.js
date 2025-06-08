@@ -30,8 +30,8 @@ export const canadaPrograms = [
                 withinLastYears: 10,
                 location:['local', 'abroad'], //TODO need a helper function to check 'local' with country
                 nocRequired: true,
-                jobTitle: "NOC", //TODO build or connect with NOC database
-                description: "At least 1 year of continuous paid work experience in the last 10 years, matched with NOC",
+                jobTitle: "", //TODO build or connect with NOC database
+                //At least 1 year of continuous paid work experience in the last 10 years, matched with NOC
             },
             language: {
                 english: languageStandards.CLB.CLB7, // minimum CLB7
@@ -84,22 +84,21 @@ export const canadaPrograms = [
     officialWebsite: 'https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/canadian-experience-class.html',
 
     requirements: {
-        minimumRequirements: {
             workExperience: {
                 yearsOfWork: 1,
                 isPaidWork: true,
                 withinLastYears: 3,
                 location:['local'],
                 nocRequired: true,
-                jobTitle: "NOC", //TODO build or connect with NOC database
-                eligibleNOC: ['0', 'A', 'B'],
+                jobTitle: "", //TODO build or connect with NOC database
+                //eligibleNOC: ['0', 'A', 'B'],
                 //'Job must be in skill type 0, A, or B of National Occupational Classification (NOC), at least 1 year of full time work experience in Canada within 3 years of applying, be paid work',
             },
 
             language: {
-                NOC_0_jobs: 'CLB7', 
-                NOC_A_jobs: 'CLB7', 
-                NOC_B_jobs: 'CLB5',  
+                // NOC_0_jobs: 'CLB7', 
+                // NOC_A_jobs: 'CLB7', 
+                // NOC_B_jobs: 'CLB5',  
                 //For NOC 0 or A jobs: minimum CLB 7 in all abilities. For NOC B jobs: minimum CLB 5 in all abilities
                 //TODO need a check function?
             },
@@ -108,7 +107,6 @@ export const canadaPrograms = [
                 level: null, 
                 //There is no education requirement for the Canadian Experience Class
             }
-        }
     }
 },
 
@@ -122,13 +120,12 @@ export const canadaPrograms = [
     officialWebsite: 'https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-trades.html',
 
     requirements: {
-        minimumRequirements: {
             workExperience: {
                 yearsOfWork: 2,
                 isPaidWork: true,
                 withinLastYears: 5,
                 nocRequired: true,
-                jobTitle: "NOC", //TODO build or connect with NOC database
+                jobTitle: "", //TODO build or connect with NOC database
                 eligibleNOC: {
                     //TODO
                     // majorGroups: [
@@ -149,7 +146,6 @@ export const canadaPrograms = [
                 level: null,
                 //'There is no education requirement for the Federal Skilled Trades Program'
             }
-        }
     }
 }, 
 
@@ -163,7 +159,6 @@ export const canadaPrograms = [
     officialWebsite: 'https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/start-visa.html',
 
     requirements: {
-        minimumRequirements: {
             businessQualification: {
                 ownershipPercentage: 50,
                 //Each applicant must hold 10% or more of the total voting rights, applicants and the designated organization together must hold more than 50% of the total voting rights
@@ -172,11 +167,10 @@ export const canadaPrograms = [
                 english: languageStandards.CLB.CLB5, //Minimum CLB 5 in all abilities
             },
             fundBudget: {
-                fund: 14690, //One person at least $14,690
+                miniFund: 14690, //One person at least $14,690
                 currency: 'CAD',
                 //TODO: needs to have currency converter
             }
-        }
     }
 },
 

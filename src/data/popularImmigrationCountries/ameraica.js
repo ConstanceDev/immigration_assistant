@@ -195,7 +195,7 @@ export const usaPrograms = [
     officialWebsite: 'https://www.uscis.gov/working-in-the-united-states/permanent-workers/eb-5-immigrant-investor-program',
     requirements: {
         investmentBudget: {
-            minimumAmount: 800000,
+            minAmount: 800000,
             currency: 'USD',
         }
     }
