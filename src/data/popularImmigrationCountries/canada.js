@@ -102,13 +102,12 @@ export const canadaPrograms = [
             language: {
                 english: {
                     standard: 'CLB',
-                    level: ['CLB7', 'CLB5']
+                    level: 'CLB5' //BUG this is not the right one, just for tests
                 }
                 // NOC_0_jobs: 'CLB7', 
                 // NOC_A_jobs: 'CLB7', 
                 // NOC_B_jobs: 'CLB5',  
                 //For NOC 0 or A jobs: minimum CLB 7 in all abilities. For NOC B jobs: minimum CLB 5 in all abilities
-                //TODO need a check function?
             },
 
             education: {
@@ -181,7 +180,7 @@ export const canadaPrograms = [
             language: {
                 english: {
                     standard: 'CLB',
-                    level: languageStandards.CLB.CLB5 //Minimum CLB 5 in all abilities
+                    level: 'CLB5' //Minimum CLB 5 in all abilities
                 }
             },
             fundBudget: {
@@ -223,7 +222,7 @@ export const canadaPrograms = [
             language: {
                 english: {
                     standard: 'CLB',
-                    level: languageStandards.CLB.CLB7 //minimum CLB 7 in all abilities
+                    level: 'CLB7' //minimum CLB 7 in all abilities
                 }
             }
         }

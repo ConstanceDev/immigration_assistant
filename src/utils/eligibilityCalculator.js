@@ -421,5 +421,14 @@ const checkEducationRequirement = (userEducation, requiredEducation) => {
 
 /**
  * Check language requirements
+ * Currently CLB & CEFR standards
  */
-const checkLanguageRequirement = (userCLB)
+const checkLanguageRequirement = (clbResult, cefrLevel, languageRequirement) => {
+  if (!languageRequirement) return true;
+
+  const { standard, level } = languageRequirement;
+
+  if (standard === 'CLB') {
+    if
+  }
+}

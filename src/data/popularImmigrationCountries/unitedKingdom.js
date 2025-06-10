@@ -4,7 +4,6 @@
  */
 
 import {
-    languageStandards,
     topRankingUniversities
     } from '../immigrationRequirements.js';
 
@@ -21,7 +20,7 @@ export const ukPrograms = [
         language: {
             english: {
                 standard: 'CEFR',
-                level: languageStandards.CEFR.B1 //at least CEFR B1
+                level: 'B1' //at least CEFR B1
             }
         },
         workExperience: {
@@ -70,7 +69,7 @@ export const ukPrograms = [
         language: {
             english: {
                 standard: 'CEFR',
-                level: languageStandards.CEFR.B2 //at least CEFR B2 level
+                level: 'B2' //at least CEFR B2 level
             }
         },
         fundBudget: {
@@ -103,7 +102,7 @@ export const ukPrograms = [
         language: {
             english: {
                 standard: 'CEFR',
-                level: languageStandards.CEFR.B1 //at least CEFR B1 level
+                level: 'B1' //at least CEFR B1 level
             }
         }
     }
