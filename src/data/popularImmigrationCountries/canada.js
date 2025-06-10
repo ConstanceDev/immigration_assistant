@@ -34,7 +34,10 @@ export const canadaPrograms = [
                 //At least 1 year of continuous paid work experience in the last 10 years, matched with NOC
             },
             language: {
-                english: languageStandards.CLB.CLB7, // minimum CLB7
+                english: {
+                    standard: 'CLB',
+                    level: languageStandards.CLB.CLB7 // minimum CLB7
+                }
             },
 
             eduction: {
@@ -49,23 +52,24 @@ export const canadaPrograms = [
                     'professionalDegree',
                     'masters',
                     'doctorate'
-                ], 
-                description: 'Any above secondary education.'
+                ], //Any above secondary education
             }
         },
         selectionFactors: {
             minPointsRequired: 41,
             language: {
                 english: {
-                    'CLB10': 24,
-                    'CLB9': 24,
-                    'CLB8': 20,
-                    'CLB7': 16,
-                    'CLB6': 0,
-                    'CLB5': 0,
-                    'CLB4': 0,
+                    standard: 'CLB',
+                    level: {
+                        'CLB10': 24,
+                        'CLB9': 24,
+                        'CLB8': 20,
+                        'CLB7': 16,
+                        'CLB6': 0,
+                        'CLB5': 0,
+                        'CLB4': 0,
+                    }
                 },
-
                 education: educationPoints.federalSkilledWorker,
                 workExperience: workExperiencePoints.federalSkilledWorker,
                 age: agePoints.federalSkilledWorker,
@@ -96,6 +100,10 @@ export const canadaPrograms = [
             },
 
             language: {
+                english: {
+                    standard: 'CLB',
+                    level: ['CLB7', 'CLB5']
+                }
                 // NOC_0_jobs: 'CLB7', 
                 // NOC_A_jobs: 'CLB7', 
                 // NOC_B_jobs: 'CLB5',  
@@ -139,8 +147,15 @@ export const canadaPrograms = [
                 //Work experience must be in the same NOC and be in eligible NOC groups
             },
             language: {
-                english:'',
-                //TODO need to rewrite it
+                english:{
+                    standard: 'CLB',
+                    level: {
+                        'speaking' : 'CLB5',
+                        'listening' : 'CLB5',
+                        'reading' : 'CLB4',
+                        'writing' : 'CLB4'
+                    }
+                },
             },
             education: {
                 level: null,
@@ -164,7 +179,10 @@ export const canadaPrograms = [
                 //Each applicant must hold 10% or more of the total voting rights, applicants and the designated organization together must hold more than 50% of the total voting rights
             },
             language: {
-                english: languageStandards.CLB.CLB5, //Minimum CLB 5 in all abilities
+                english: {
+                    standard: 'CLB',
+                    level: languageStandards.CLB.CLB5 //Minimum CLB 5 in all abilities
+                }
             },
             fundBudget: {
                 miniFund: 14690, //One person at least $14,690
@@ -203,7 +221,10 @@ export const canadaPrograms = [
             age: agePoints.selfEmployed,
 
             language: {
-                english: languageStandards.CLB.CLB7, //minimum CLB 7 in all abilities
+                english: {
+                    standard: 'CLB',
+                    level: languageStandards.CLB.CLB7 //minimum CLB 7 in all abilities
+                }
             }
         }
     }

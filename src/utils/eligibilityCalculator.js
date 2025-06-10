@@ -18,7 +18,7 @@ import irelandPrograms from '../data/popularImmigrationCountries/ireland';
 //TODO build live rates later versions
 
 const CURRENCY_RATES = {
-  'USD' : {USD: 1, GBP: 0.79, EUR: 0.93, CAD: 1.35, CNY: 7.25 },
+  'USD': { USD: 1, GBP: 0.79, EUR: 0.93, CAD: 1.35, CNY: 7.25 },
   'GBP': { USD: 1.27, GBP: 1, EUR: 1.17, CAD: 1.71, CNY: 9.19 },
   'EUR': { USD: 1.08, GBP: 0.85, EUR: 1, CAD: 1.46, CNY: 7.84 },
   'CAD': { USD: 0.74, GBP: 0.58, EUR: 0.68, CAD: 1, CNY: 5.37 },
@@ -37,26 +37,25 @@ const convertCurrency = (amount, fromCurrency, toCurrency) => {
 /**
  * Calculate CLB level from IELTS scores
  */
-
 const calculateCLBLevel = (ieltsScores) => {
-const { listening, speaking, reading, writing } = ieltsScores;
+  const { listening, speaking, reading, writing } = ieltsScores;
 
-const getCLBFromIELTS = (score, skill) => {
-  const numScore = parseFloat(score);
-  if (!numScore) return 0;
+  const getCLBFromIELTS = (score, skill) => {
+    const numScore = parseFloat(score);
+    if (!numScore) return 0;
 
-  //CLB conversion based on IELTS scores
-  if (skill === 'listening') {
-    if (numScore >= 8.5) return 10;
-    if (numScore >= 8) return 9;
-    if (numScore >= 7.5) return 8;
-    if (numScore >= 6) return 7;
-    if (numScore >= 5.5) return 6;
-    if (numScore >= 5) return 5;    
-    if (numScore >= 4.5) return 4;
-    return 4;
-  } else if (skill === 'speaking') {
-    if (numScore >= 7.5) return 10;
+    //CLB conversion based on IELTS scores
+    if (skill === 'listening') {
+      if (numScore >= 8.5) return 10;
+      if (numScore >= 8) return 9;
+      if (numScore >= 7.5) return 8;
+      if (numScore >= 6) return 7;
+      if (numScore >= 5.5) return 6;
+      if (numScore >= 5) return 5;    
+      if (numScore >= 4.5) return 4;
+      return 4;
+    } else if (skill === 'speaking') {
+      if (numScore >= 7.5) return 10;
       if (numScore >= 7) return 9;
       if (numScore >= 6.5) return 8;
       if (numScore >= 6) return 7;
@@ -64,7 +63,7 @@ const getCLBFromIELTS = (score, skill) => {
       if (numScore >= 5) return 5;
       if (numScore >= 4) return 4;
       return 4;
-  } else if (skill === 'reading') {
+    } else if (skill === 'reading') {
       if (numScore >= 8) return 10;
       if (numScore >= 7) return 9;
       if (numScore >= 6.5) return 8;
@@ -82,30 +81,29 @@ const getCLBFromIELTS = (score, skill) => {
       if (numScore >= 5) return 5;
       if (numScore >= 4) return 4;
       return 4;
-  }
-  return 0;
-};
+    }
+    return 0;
+  };
 
-const clbLevels = {
-  listening: getCLBFromIELTS(listening, 'listening'),
-  speaking: getCLBFromIELTS(speaking, 'speaking'),
-  reading: getCLBFromIELTS(reading, 'reading'),
-  writing: getCLBFromIELTS(writing, 'writing')
-};
+  const clbLevels = {
+    listening: getCLBFromIELTS(listening, 'listening'),
+    speaking: getCLBFromIELTS(speaking, 'speaking'),
+    reading: getCLBFromIELTS(reading, 'reading'),
+    writing: getCLBFromIELTS(writing, 'writing')
+  };
 
-const overallCLB = Math.min(...Object.values(clbLevels));
+  const overallCLB = Math.min(...Object.values(clbLevels));
 
-return { individual: clbLevels, overall: overallCLB};
+  return { individual: clbLevels, overall: overallCLB };
 };
 
 /**
  * Calculate CEFR level from IELTS scores
  */
-
 const calculateCEFRLevel = (ieltsScores) => {
-const { listening, speaking, reading, writing } = ieltsScores;
-const scores = [listening, speaking, reading, writing].map(s => parseFloat(s) || 0);
-const average = scores.reduce((sum, score) => sum + score, 0) / 4;
+  const { listening, speaking, reading, writing } = ieltsScores;
+  const scores = [listening, speaking, reading, writing].map(s => parseFloat(s) || 0);
+  const average = scores.reduce((sum, score) => sum + score, 0) / 4;
 
   // CEFR mapping based on average IELTS score
   if (average >= 8.5) return 'C2';
@@ -120,7 +118,6 @@ const average = scores.reduce((sum, score) => sum + score, 0) / 4;
 /**
  * Check top universities for UK HPI Visa
  */
-
 const checkUniversityEligibility = (universityName, graduationDate) => {
   if (!universityName || !graduationDate) return false;
 
@@ -148,7 +145,6 @@ const checkUniversityEligibility = (universityName, graduationDate) => {
 /**
  * check work location
  */
-
 const checkWorkLocationRequirement = (userLocations, programLocation, programCountry) => {
   if (!programLocation || programLocation.length === 0) return true;
 
@@ -181,147 +177,249 @@ const checkExtraodinayAbility = (userAchievements, requiredOptions, minimumRequi
   return matchingAchievements.length >= minimumRequired;
 };
 
+/**
+ * ==========================================
+ * STEP 1: CHECK ADDITIONAL OPTIONS PROGRAMS
+ * ==========================================
+ */
+
+/**
+ * Check Graduate/Student programs
+ */
+const checkGraduateStudentPrograms = (programs, formData) => {
+  if (!formData.higherEducation) return [];
+
+  const graduatePrograms = programs.filter(p => p.category === 'Graduate/Student');
+  const eligiblePrograms = [];
+
+  graduatePrograms.forEach(program => {
+    let eligible = true;
+    let notes = [];
+
+    //For UK HPI visa - check university eligibility
+    if (program.id === 'uk-hpi') {
+      const req = program.requirements;
+      
+      //check education level
+      if (req.education?.level && !req.education.level.includes(formData.education)) {
+        eligible = false;
+        notes.push('Education level requirement not met');
+      }
+
+      //Check University eligibility
+      if (req.education?.university && !checkUniversityEligibility(formData.university, formData.graduationDate)) {
+        eligible = false;
+        notes.push('Must have graduated from eligible top-ranking university within last 5 years');
+      }
+    }
+
+    if (eligible) {
+      eligiblePrograms.push({
+        ...program,
+        points: 0,
+        notes: notes.length > 0 ? notes : null
+      });
+    }
+  });
+
+  return eligiblePrograms;
+};
+
+/**
+ * Check Investment programs
+ */
+const checkInvestmentPrograms = (programs, formData) => {
+  if (!formData.investments) return [];
+
+  const investmentPrograms = programs.filter(p => p.category === 'Investment');
+  const eligiblePrograms = [];
+
+  investmentPrograms.forEach(program => {
+    let eligible = true;
+    let notes = [];
+    const req = program.requirements;
+
+    //check investment budget requirement
+    if (req.investmentBudget?.minAmount) {
+      const convertedInvestment = convertCurrency(
+        parseFloat(formData.investmentBudget) || 0,
+        formData.investmentCurrency,
+        req.investmentBudget.currency || 'USD'
+      );
+
+      if (convertedInvestment < req.investmentBudget.minAmount) {
+        eligible = false;
+        notes.push(`Minimum investment of ${req.investmentBudget.currency || 'USD'} ${req.investmentBudget.minAmount.toLocaleString()} is not met`);
+      }
+    }
+
+    // Check net worth requirement
+    if (req.netWorth?.minNetWorth) {
+      const convertedNetWorth = convertCurrency(
+        parseFloat(formData.netWorth) || 0,
+        formData.netWorthCurrency,
+        req.netWorth.currency || 'USD'
+      );
+      
+      if (convertedNetWorth < req.netWorth.minNetWorth) {
+        eligible = false;
+        notes.push(`Minimum net worth of ${req.netWorth.currency || 'USD'} ${req.netWorth.minNetWorth.toLocaleString()} required`);
+      }
+    }
+
+    if (eligible) {
+      eligiblePrograms.push({
+        ...program,
+        points: 0,
+        notes: notes.length > 0 ? notes : null
+      });
+    }
+  });
+
+  return eligiblePrograms;
+};
+
+/**
+ * Check Entrepreneur programs
+ */
+const checkEntrepreneurPrograms = (programs, formData) => {
+  if (!formData.startBusiness) return [];
+
+  const entrepreneurPrograms = programs.filter(p => p.category === 'Entrepreneur');
+  const eligiblePrograms = [];
+
+  entrepreneurPrograms.forEach(program => {
+    let eligible = true;
+    let notes = [];
+    const req = program.requirements;
+
+    //check business funding requirements
+    if (req.fundBudget?.miniFund) {
+      const convertedFunding = convertCurrency(
+        parseFloat(formData.businessFunding) || 0,
+        formData.businessCurrency,
+        req.fundBudget.currency || 'USD'
+      );
+
+      if (convertedFunding < req.fundBudget.miniFund) {
+        eligible = false;
+        notes.push(`Minimum business funding of ${req.fundBudget.currency || 'USD'} ${req.fundBudget.miniFund.toLocaleString()} required`);
+      }
+    }
+
+    // Check language requirements (some entrepreneur programs have language requirements)
+    if (req.language?.english) {
+      const clbResult = calculateCLBLevel(formData.ielts || {});
+      const requiredCLB = parseInt(req.language.english.replace?.('CLB', '') || "0");
+
+      if (clbResult.overall < requiredCLB) {
+        eligible = false;
+        notes.push(`Minimum CLB ${requiredCLB} English language requirement not met`);
+      }
+    }
+
+    if (eligible) {
+      eligiblePrograms.push({
+        ...program,
+        points: 0,
+        notes: notes.length > 0 ? notes : null
+      });
+    }
+  });
+
+  return eligiblePrograms;
+};
+
+/**
+ * Check Extraordinary Ability programs
+ */
+const checkExtraordinaryAbilityPrograms = (programs, formData) => {
+  if (!formData.extraordinaryAbility) return [];
+
+  const extraordinaryPrograms = programs.filter(p => p.category === 'Extraordinary Ability');
+  const eligiblePrograms = [];
+
+  extraordinaryPrograms.forEach(program => {
+    let eligible = true;
+    let notes = [];
+    const req = program.requirements;
+
+    //check extraodinary ability requirements
+    if (req.extraordinaryAbility) {
+      if (!checkExtraordinaryAbility(
+        formData.extraordinaryAchievements || [],
+        req.extraordinaryAbility.requiredOptions,
+        req.extraordinaryAbility.minimumRequired
+      )) {
+        eligible = false;
+        notes.push(`Must meet at least ${req.extraordinaryAbility.minimumRequired} extraordinary ability criteria`);
+      }
+    }
+
+    //check work experience for programs that require it (like EB-1B)
+    if (req.workExperience?.yearsOfWork) {
+      if (parseInt(formData.workExperience) < (req.workExperience.yearsOfWork)) {
+        eligible = false;
+        notes.push(`Minimum ${req.workExperience.yearsOfWork} years of work experience required`);
+      }
+    }
+
+    if (eligible) {
+      eligiblePrograms.push({
+        ...program,
+        points: 0,
+        notes: notes.length > 0 ? notes : null
+      });
+    }
+  });
+
+  return eligiblePrograms;
+};
+
+/**
+ * ==========================================
+ * STEP 2: CHECK SKILLED WORKER PROGRAMS
+ * ==========================================
+ */
+
+/**
+ * Check if work location matches program requirements
+ */
+
+const checkWorkLocationRequirement = (userLocations, programLocation, programCountry) => {
+  if (!programLocation || programLocation.length === 0) return true;
+
+  const hasLocal = programLocation.includes('local');
+  const hasAbroad = programLocation.includes('Abroad');
+
+  if (hasLocal && hasAbroad) return true; //Any location is fine
+
+  if (hasLocal) {
+    return userLocations.includes(programCountry);
+  }
+
+  if (hasAbroad) {
+    return userLocations.some(loc => loc !== programCountry);
+  }
+
+  return true;
+}
+
+/**
+ * Check education requirements
+ */
+
 const checkEducationRequirement = (userEducation, requiredEducation) => {
   if (!requiredEducation) return true;
 
   if (Array.isArray(requiredEducation)) {
     return requiredEducation.includes(userEducation);
   }
-
+  // If required education is a single value, user's education must match it
   return userEducation === requiredEducation;
 };
 
 /**
- * check language requirements
+ * Check language requirements
  */
-
-const checkLanguageRequirement = (userCLB, requiredLevel) => {
-  if (!requiredLevel) return true;
-
-  if (typeof requiredLevel === 'string') {
-    const requiredCLB = parseInt(requiredLevel.replace('CLB', ''));
-    return userCLB >= requiredCLB;
-  }
-  return true;
-};
-
-/**
- * Check salary requirement
- */
-
-const checkSalaryRequirement = (userSalary, salaryCurrency, workExperienceReq) => {
-  if(!workExperienceReq?.salary) return true;
-
-  const salaryReq = workExperienceReq.salary;
-  const convertedSalary = convertCurrency(
-    parseFloat(userSalary) || 0,
-    salaryCurrency,
-    salaryReq.currency || 'USD'
-  );
-
-  if (salaryReq.min && convertedSalary < salaryReq.min) return false;
-  if (salaryReq.max && convertedSalary >= salaryReq.max) return false;
-
-  return true;
-};
-
-/**
- * Check investment requirements
- */
-const checkInvestmentRequirement = (userInvestment, investmentCurrency, investmentBudgetReq) => {
-  if (!userInvestment?.minAmount) return true;
-
-  const convertedInvestment = convertCurrency(
-    parseFloat(userInvestment) || 0,
-    investmentCurrency,
-    investmentBudgetReq.currency || 'USD'
-  );
-
-  return convertCurrency >= investmentBudgetReq.minAmount;
-};
-
-/**
- * Check business funding requirements
- */
-const checkBusinessFundingRequirement = (userFunding, fundingCurrency, fundBudgetReq) => {
-  if(!fundBudgetReq?.miniFund) return true;
-
-  const convertedFudning = convertCurrency(
-    parseFloat(userFunding) || 0,
-    fundingCurrency,
-    fundBudgetReq.currency || 'USD'
-  );
-
-  return convertedFudning >= fundBudgetReq.miniFund;
-};
-
-
-/**
- * Check net worth requirements
- */
-
-const checkNetWorthRequirement = (userNetWorth, netWorthCurrency, netWorthReq) => {
-  if(!netWorthReq?.minNetWorth) return true;
-
-  const convertedNetWorth = convertCurrency(
-    parseFloat(userNetWorth) || 0,
-    netWorthCurrency,
-    netWorthReq.currency || 'USD'
-  );
-
-  return convertedNetWorth >= netWorthReq.minNetWorth;
-};
-
-/**
- * Main eligibility calculation function
- */
-
-export const calculateEligibility = (formData) => {
-
-  let eligiblePrograms = [];
-
-  //Calculate lanaguage levels
-  const clbResult = calculateCLBLevel(formData.ielts);
-  const cefrLevel = calculateCEFRLevel(formData.ielts);
-
-  // Combine all programs from different countries
-  const allPrograms = [
-    ...canadaPrograms,
-    ...usaPrograms,
-    ...ukPrograms,
-    ...irelandPrograms
-  ];
-
-  allPrograms.forEach(program => {
-    if (!program || !program.requirements) {
-      console.warn('Invalid program data: ', program);
-      return;
-    }
-
-    const req = program.requirements;
-    let eligible = true;
-    let points = 0;
-    let notes = [];
-
-    // Check category-based filtering first
-    if (program.category === 'Graduate/Student' && !formData.higherEducation) {
-      return; // Skip if user doesn't want local education
-    }
-
-    if (program.category === 'Investment' && !formData.investment) {
-      return; // Skip if user doesn't want to invest
-    }
-
-    if (program.category === 'Entrepreneur' && !formData.startBusiness) {
-      return; // Skip if user doesn't want to start business
-    }
-
-    if (program.category === 'Extraordinary Ability' && !formData.extraordinaryAbility) {
-      return;
-    }
-
-  }
-
-);
-
-};
+const checkLanguageRequirement = (userCLB)

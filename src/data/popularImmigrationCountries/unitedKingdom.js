@@ -19,7 +19,10 @@ export const ukPrograms = [
     officialWebsite: 'https://www.gov.uk/skilled-worker-visa',
     requirements: {
         language: {
-            english: languageStandards.CEFR.B1, //at least CEFR B1
+            english: {
+                standard: 'CEFR',
+                level: languageStandards.CEFR.B1 //at least CEFR B1
+            }
         },
         workExperience: {
             jobTitle: '', //TODO need to match with occupation code
@@ -65,7 +68,10 @@ export const ukPrograms = [
     isPointsBased: false,
     requirements: {
         language: {
-            english: languageStandards.CEFR.B2, //at least CEFR B2 level
+            english: {
+                standard: 'CEFR',
+                level: languageStandards.CEFR.B2 //at least CEFR B2 level
+            }
         },
         fundBudget: {
             miniFund: 50000, //At least £50,000 
@@ -95,7 +101,10 @@ export const ukPrograms = [
             university: topRankingUniversities, //TODO match with top ranking university tables given graduation dates
         },
         language: {
-            level: languageStandards.CEFR.B1 //at CEFR B1 level
+            english: {
+                standard: 'CEFR',
+                level: languageStandards.CEFR.B1 //at least CEFR B1 level
+            }
         }
     }
 },
