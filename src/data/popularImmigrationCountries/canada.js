@@ -144,7 +144,7 @@ export const canadaPrograms = [
             language: {
                 english:{
                     standard: 'CLB',
-                    level: {
+                    levelToSkill: {
                         'speaking' : 'CLB5',
                         'listening' : 'CLB5',
                         'reading' : 'CLB4',
