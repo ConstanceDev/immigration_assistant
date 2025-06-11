@@ -6,8 +6,7 @@
 import {
     educationPoints,
     agePoints,
-    workExperiencePoints,
-    languageStandards
+    workExperiencePoints
 } from '../immigrationRequirements.js';
 
 
@@ -36,7 +35,7 @@ export const canadaPrograms = [
             language: {
                 english: {
                     standard: 'CLB',
-                    level: languageStandards.CLB.CLB7 // minimum CLB7
+                    level: 'CLB7' // minimum CLB7
                 }
             },
 
@@ -60,14 +59,11 @@ export const canadaPrograms = [
             language: {
                 english: {
                     standard: 'CLB',
-                    level: {
+                    levelToPoints: {
                         'CLB10': 24,
                         'CLB9': 24,
                         'CLB8': 20,
-                        'CLB7': 16,
-                        'CLB6': 0,
-                        'CLB5': 0,
-                        'CLB4': 0,
+                        'CLB7': 16
                     }
                 },
                 education: educationPoints.federalSkilledWorker,

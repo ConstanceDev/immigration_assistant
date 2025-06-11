@@ -423,12 +423,35 @@ const checkEducationRequirement = (userEducation, requiredEducation) => {
  * Check language requirements
  * Currently CLB & CEFR standards
  */
+
+// convert CEFR level to numeric value for comparison & check
+const cefrToNumeric = (cefrlevel) => {
+  const cefrMap = {
+    'Below A1': 0,
+    'A1': 1,
+    'A2': 2,
+    'B1': 3,
+    'B2': 4,
+    'C1': 5,
+    'C2': 6
+  };
+  return cefrMap[cefrlevel] || 0;
+};
+
 const checkLanguageRequirement = (clbResult, cefrLevel, languageRequirement) => {
   if (!languageRequirement) return true;
 
   const { standard, level } = languageRequirement;
 
   if (standard === 'CLB') {
-    if
+    if (typeof level === 'string') {
+      //handle level format like 'CLB7'
+      const requiredCLB = parseInt(level.replace('CLB', ''));
+      return clbResult.overall >= requiredCLB;
+    }
+    if (typeof === 'object' && level.CLB7) {
+      // Handle format like { CLB7: {...}, CLB8: {...} } for points-based systems
+      
+    }
   }
 }
