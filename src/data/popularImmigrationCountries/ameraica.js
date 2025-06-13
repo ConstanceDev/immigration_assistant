@@ -180,8 +180,10 @@ export const usaPrograms = [
     isPointsBased: false,
     officialWebsite: 'https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-third-preference-eb-3',
     requirements: {
+        workExperience: {
         yearsOfWork: 0,
         maxYearsOfWork: 2, //Less than 2 years of experience/training'
+        }
     }
 },
 

@@ -142,27 +142,6 @@ const checkUniversityEligibility = (universityName, graduationDate) => {
   );
 };
 
-/**
- * check work location
- */
-const checkWorkLocationRequirement = (userLocations, programLocation, programCountry) => {
-  if (!programLocation || programLocation.length === 0) return true;
-
-  const hasLocal = programLocation.includes('local');
-  const hasAbroad = programLocation.includes('abroad');
-
-  if (hasLocal && hasAbroad) return true; //Any location is fine
-  if (hasLocal) {
-    return userLocations.includes(programCountry);
-  } //Must have work experience in the program's country
-
-  if (hasAbroad) {
-    // Must have work experience NOT in the program's country
-    return userLocations.some(loc => loc !== programCountry);
-  }
-
-  return true;
-};
 
 /**
  * Check extraodinary ability requirements
@@ -346,7 +325,7 @@ const checkExtraordinaryAbilityPrograms = (programs, formData) => {
 
     //check extraodinary ability requirements
     if (req.extraordinaryAbility) {
-      if (!checkExtraordinaryAbility(
+      if (!checkExtraodinayAbility(
         formData.extraordinaryAchievements || [],
         req.extraordinaryAbility.requiredOptions,
         req.extraordinaryAbility.minimumRequired
@@ -438,20 +417,204 @@ const cefrToNumeric = (cefrlevel) => {
   return cefrMap[cefrlevel] || 0;
 };
 
+//Handle multiple types of lanaguage requirement, especially in Canadian programs
 const checkLanguageRequirement = (clbResult, cefrLevel, languageRequirement) => {
   if (!languageRequirement) return true;
 
-  const { standard, level } = languageRequirement;
+  const { standard, level, levelToPoints, levelToSkill } = languageRequirement;
 
+// Type 1: Normal format - single minimum CLB level
   if (standard === 'CLB') {
-    if (typeof level === 'string') {
-      //handle level format like 'CLB7'
+    if (typeof level === 'string') { // Handle format like 'CLB7' or just '7'
       const requiredCLB = parseInt(level.replace('CLB', ''));
       return clbResult.overall >= requiredCLB;
     }
-    if (typeof === 'object' && level.CLB7) {
-      // Handle format like { CLB7: {...}, CLB8: {...} } for points-based systems
+    // Type 2: levelToPoints format - used in selectionFactors (points-based)
+    if (levelToPoints) {
+      const lowestRequiredLevel = Math.min(
+        ...Object.keys(levelToPoints).map(key => parseInt(key.replace('CLB', '')))
+      );
+      return clbResult.overall >= lowestRequiredLevel;
+    }
+    // Type 3: levelToSkill format - different CLB requirements for each skill
+    if (levelToSkill) {
+      const requiredLevels = {
+        speaking: parseInt(levelToSkill.speaking?.replace('CLB', '') || '0'),
+        listening: parseInt(levelToSkill.listening?.replace('CLB', '') || '0'),
+        reading: parseInt(levelToSkill.reading?.replace('CLB', '') || '0'),
+        writing: parseInt(levelToSkill.writing?.replace('CLB', '') || '0')
+      };
+
+      //check if user meets each individual skill requirement
+      return (
+        clbResult.individual.speaking >= requiredLevels.speaking &&
+        clbResult.individual.listening >= requiredLevels.listening &&
+        clbResult.individual.reading >= requiredLevels.reading && 
+        clbResult.individual.writing >= requiredLevels.writing
+      );
+    }
+  }
+
+  if (standard === 'CEFR') {
+    if (typeof level === 'string') {
+    // Handle format like 'B1', 'B2', etc. - check if user meets minimum
+    const { listening, speaking, reading, writing } = formData.ielts || {};
+    const scores = [listening, speaking, reading, writing].map(s => parseFloat(s) || 0);
+    const average = scores.reduce((sum, score) => sum + score, 0)/4;
+    return level.includes(average);
+
+    }
+  }
+
+  return true;
+};
+
+/**
+ * Check salary requirements with range support
+ */
+const checkSalaryRequirement = (userSalary, salaryCurrency, workExperienceReq) => {
+  if (!workExperienceReq.salary) return true;
+
+  const salaryReq = workExperienceReq.salary;
+  const convertedSalary = convertCurrency(
+    parseFloat(userSalary) || 0,
+    salaryCurrency,
+    salaryReq.currency || 'USD'
+  );
+
+  if (salaryReq.min && convertedSalary < salaryReq.min) return false;
+  if (salaryReq.max && convertedSalary >= salaryReq.max) return false;
+
+  return true;
+};
+
+/**
+ * Check Worker Programs (both Skilled Worker and High Professional)
+ */
+const checkWorkerPrograms = (programs, formData) => {
+  const workerPrograms = programs.filter(p => ['Skilled Worker', 'High Professional'].includes(p.category)
+);
+
+const eligiblePrograms = [];
+const clbResult = calculateCLBLevel(formData.ielts || {});
+const cefrLevel = calculateCEFRLevel(formData.ielts || {});
+
+workerPrograms.forEach(program => {
+  if (!program || !program.requirements) {
+    console.warn('Invalid program data: ', program);
+    return;
+  }
+
+  const req = program.requirements;
+  let eligible = true;
+  let points = 0;
+  let notes = [];
+
+  //Age requirements
+  if (program.isPointsBased && req.minimumRequirements?.age) {
+    const userAge = parseInt(formData.age);
+    const { min, max } = req.minimumRequirements.age;
+    if (userAge < min || userAge > max) {
+      eligible = false;
+      notes.push(`Age must be between ${min} and ${max}`);
+    }
+  }
+
+  //Education requirements
+  if (program.isPointsBased) {
+    // Points-based programs: check minimumRequirements
+    if (req.minimumRequirements?.education?.level || req.minimumRequirements?.education?.level) {
+      const educationLevel = req.minimumRequirements?.education?.level || req.minimumRequirements?.eduction?.level;
+      if (!checkEducationRequirement(formData.education, educationLevel)) {
+        eligible = false;
+        notes.push('Education requirement not met');
+      }
+    }
+  } else {
+    //Non-points-based programs: check direct requirements
+    if (req.education?.level) {
+      if (!checkEducationRequirement(formData.education, req.education.level)) {
+        eligible = false;
+        notes.push('Education requirement not met');
+      }
+    }
+  }
+
+  //Check options for programs like EB-2A
+  if (req.points) {
+    let meetsAnyOption = false;
+
+    if (req.options.option) {
+      const option1Met = checkEducationRequirement(formData.education, req.options.option1.education?.level);
+      if (option1Met) meetsAnyOption = true;
+    }
+
+    if (req.options.option2 && !meetsAnyOption) {
+      const educationMet = checkEducationRequirement(formData.education, req.options.option2?.education?.level);
+      const experienceMet = parseInt(formData.workExperience) >= (req.options.option2.workExperience?.yearsOfWork || 0);
+      if (educationMet && experienceMet) meetsAnyOption = true;
+    }
+
+    if (!meetsAnyOption) {
+      eligible = false;
+      notes.push('Does not meet any of the required options');
+    }
+  }
+
+  //work experience requirements
+  if (program.isPointsBased) {
+    //Points-based programs: check minimumRequirements
+    if (req.minimumRequirements?.workExperience?.yearsOfWork) {
+      if (parseInt(formData.workExperience) < req.minimumRequirements.workExperience.yearsOfWork) {
+        eligible = false;
+        notes.push(`Minimum ${req.minimumRequirements.workExperience.yearsOfWork} years of work experience required`);
+      }
+    }
+
+    //Paid work requirement for points-based programs
+    if (req.minimumRequirements?.workExperience?.isPaidWork && formData.isPaidWork !== 'yes') {
+      eligible = false;
+      notes.push('Paid work experience required');
+    }
+
+    //Work location requirement for points-based programs
+    if (req.minimumRequirements?.workExperience?.location) {
+      if (!checkWorkLocationRequirement(formData.workLocation, req.minimumRequirements.workExperience.location, program.country)) {
+        eligible = false;
+        notes.push('Work location requirement not met');
+      }
+    }
+  } else {
+    // Non-points-based programs: check direct requirements
+    if (req.workExperience?.yearsOfWork) {
+      if (parseInt(formData.workExperience) < req.workExperience.yearsOfWork) {
+        eligible = false;
+        notes.push(`Minimum ${req.workExperience.yearsOfWork} years of work experience required`);
+      }
+    }
+
+    //Paid work requirement for non-points-based programs
+    if (req.workExperience.isPaidWork && formData.isPaidWork !== 'yes') {
+      eligible = false;
+      notes.push('Paid work experience required');
+    }
+
+    //Work location requirement for non-points-based programs
+    if (req.workExperience?.location) {
+      if (!checkWorkLocationRequirement(formData.workLocation, req.workExperience.location, program.country)) {
+        eligible = false;
+        notes.push('Work location requirement not met');
+      }
+    }
+  }
+
+  // Handle direct yearsOfWork and maxYearsOfWork properties (for specific programs like us-eb3-otherWorkers)
+  if (req.yearsOfWork !== undefined) {
+    if (parseInt(formData.workExperience) < req.yearsOfWork) {
       
     }
   }
+
+});
+
 }
