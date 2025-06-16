@@ -83,23 +83,6 @@ export const educationPoints = {
   },
 };
 
-// Education options for the select input
-export const educationOptions = [
-  { value: '', label: 'Select level' },
-  { value: 'belowSecondary', label: 'Below secondary education' },
-  { value: 'secondary', label: 'Secondary school (high school diploma)' },
-  { value: 'oneYearTwelve', label: 'One-year degree, diploma, certificate or apprenticeship (equivalent to at least 12 years of full-time study)' },
-  { value: 'oneYearThirteen', label: 'One-year degree, diploma, certificate or apprenticeship (equivalent to at least 13 years of full-time study)' },
-  { value: 'twoYearDiploma', label: 'Two-year degree, diploma, certificate or apprenticeship' },
-  { value: 'bachelorsThreeYear', label: 'University degree of three or more years at the Bachelor\'s level' },
-  { value: 'threeDiploma', label: 'Three-year diploma, trade certificate or apprenticeship' },
-  { value: 'twoCertificates', label: 'Two or more certificates, diplomas' },
-  { value: 'twoBachelors', label: 'Two or more university degrees at the Bachelor\'s level' },
-  { value: 'professionalDegree', label: 'Professional degree needed to practice in a licensed profession' },
-  { value: 'masters', label: 'University degree at the Master\'s level' },
-  { value: 'doctorate', label: 'University degree at the Doctoral (PhD) level' }
-];
-
 /**
  * Top Ranking Universities for UK High Potential Individual (HPI) Visa
  * Universities are grouped by graduation date periods
@@ -442,7 +425,126 @@ export const extraordinaryAbilityRequirements = {
   advanced_degree: 'I hold an advanced degree (Masters/PhD) or equivalent experience in my field',
 }
 
-//TODO this should set as a mutiple choice
+
+/**
+ * Form Options
+ */
+
+// Education options for the select input
+export const educationOptions = [
+  { value: '', label: 'Select your highest education level' },
+  { value: 'belowSecondary', label: 'Below secondary education' },
+  { value: 'secondary', label: 'Secondary school (high school diploma)' },
+  { value: 'oneYearTwelve', label: 'One-year degree, diploma, certificate or apprenticeship (equivalent to at least 12 years of full-time study)' },
+  { value: 'oneYearThirteen', label: 'One-year degree, diploma, certificate or apprenticeship (equivalent to at least 13 years of full-time study)' },
+  { value: 'twoYearDiploma', label: 'Two-year degree, diploma, certificate or apprenticeship' },
+  { value: 'bachelorsThreeYear', label: 'University degree of three or more years at the Bachelor\'s level' },
+  { value: 'threeDiploma', label: 'Three-year diploma, trade certificate or apprenticeship' },
+  { value: 'twoCertificates', label: 'Two or more certificates, diplomas' },
+  { value: 'twoBachelors', label: 'Two or more university degrees at the Bachelor\'s level' },
+  { value: 'professionalDegree', label: 'Professional degree needed to practice in a licensed profession' },
+  { value: 'masters', label: 'University degree at the Master\'s level' },
+  { value: 'doctorate', label: 'University degree at the Doctoral (PhD) level' }
+];
+
+// Job type options (sample professions)
+export const jobTypeOptions = [
+  { value: '', label: 'Select profession' },
+  { value: 'software_engineer', label: 'Software Engineer' },
+  { value: 'data_scientist', label: 'Data Scientist' },
+  { value: 'doctor', label: 'Doctor' },
+  { value: 'nurse', label: 'Nurse' },
+  { value: 'teacher', label: 'Teacher' },
+  { value: 'accountant', label: 'Accountant' },
+  { value: 'engineer', label: 'Engineer' },
+  { value: 'manager', label: 'Manager' },
+  { value: 'consultant', label: 'Consultant' },
+  { value: 'researcher', label: 'Researcher' },
+  { value: 'architect', label: 'Architect' },
+  { value: 'lawyer', label: 'Lawyer' },
+  { value: 'designer', label: 'Designer' },
+  { value: 'other', label: 'Other' }
+];
+
+// Currency options
+export const currencyOptions = [
+  { value: 'CNY', label: 'CNY (Chinese Yuan)' },
+  { value: 'USD', label: 'USD (US Dollar)' },
+  { value: 'GBP', label: 'GBP (British Pound)' },
+  { value: 'EUR', label: 'EUR (Euros)' },
+  { value: 'CAD', label: 'CAD (Canadian Dollar)' }
+];
+
+// IELTS score options
+export const ieltsScoreOptions = [
+  { value: '', label: 'Select score' },
+  { value: '2.0', label: '2.0' },
+  { value: '2.5', label: '2.5' },
+  { value: '3.0', label: '3.0' },
+  { value: '3.5', label: '3.5' },
+  { value: '4.0', label: '4.0' },
+  { value: '4.5', label: '4.5' },
+  { value: '5.0', label: '5.0' },
+  { value: '5.5', label: '5.5' },
+  { value: '6.0', label: '6.0' },
+  { value: '6.5', label: '6.5' },
+  { value: '7.0', label: '7.0' },
+  { value: '7.5', label: '7.5' },
+  { value: '8.0', label: '8.0' },
+  { value: '8.5', label: '8.5' },
+  { value: '9.0', label: '9.0' },
+  { value: '9.5', label: '9.5' },
+  { value: '10.0', label: '10.0' }
+];
+
+// Work location options
+export const workLocationOptions = [
+  { value: 'USA', label: 'USA' },
+  { value: 'UK', label: 'UK' },
+  { value: 'Canada', label: 'Canada' },
+  { value: 'Ireland', label: 'Ireland' },
+  { value: 'China', label: 'China' },
+  { value: 'Others', label: 'Others' }
+];
+
+
+// Extraordinary ability options
 export const extraordinaryAbilityOptions = [
-  { value: '', label: 'Select status' },
-]
+  { value: 'international_awards', label: 'I have received major national or international awards/prizes in my field' },
+  { value: 'media_recognition', label: 'My work has been featured in major publications, media, or trade journals' },
+  { value: 'high_salary', label: 'I earn significantly above average salary in my field (top 10%)' },
+  { value: 'professional_membership', label: 'I am a member of exclusive professional associations requiring outstanding achievements' },
+  { value: 'peer_review', label: 'I have been asked to judge or review others\' work in my field' },
+  { value: 'original_contributions', label: 'I have made original contributions of major significance to my field' },
+  { value: 'scholarly_articles', label: 'I have authored scholarly articles or publications in my field' },
+  { value: 'leadership_role', label: 'I hold or have held a leadership role in distinguished organisations' },
+  { value: 'international_recognition', label: 'I am internationally recognised as a leader/expert in my field' },
+  { value: 'advanced_degree', label: 'I hold an advanced degree (Masters/PhD) or equivalent experience in my field' }
+];
+
+// Helper function to get universities by graduation date
+export const getUniversityByGraduationDate = (graduationDate) => {
+  if (!graduationDate) return [];
+
+  const gradDate = new Date(graduationDate);
+  const dateRanges = [
+    { key: '2024-11-01_2025-10-31', start: new Date('2024-11-01'), end: new Date('2025-10-31') },
+    { key: '2023-11-01_2024-10-31', start: new Date('2023-11-01'), end: new Date('2024-10-31') },
+    { key: '2022-11-01_2023-10-31', start: new Date('2022-11-01'), end: new Date('2023-10-31') },
+    { key: '2021-11-01_2022-10-31', start: new Date('2021-11-01'), end: new Date('2022-10-31') },
+    { key: '2020-11-01_2021-10-31', start: new Date('2020-11-01'), end: new Date('2021-10-31') },
+    { key: '2019-11-01_2020-10-31', start: new Date('2019-11-01'), end: new Date('2020-10-31') }
+  ];
+  
+  const matchingRange = dateRanges.find(range => 
+    gradDate >= range.start && gradDate <= range.end
+  );
+
+  if (!matchingRange) return [];
+
+  const eligibleUniversities = topRankingUniversities[matchingRange.key] || [];
+  return eligibleUniversities.map(uni => ({
+    value: uni.name,
+    label: `${uni.name} (${uni.country})`
+  }));
+};
