@@ -1,5 +1,4 @@
 import {
-  languageStandards,
   educationPoints,
   agePoints,
   workExperiencePoints,
@@ -458,14 +457,12 @@ const checkLanguageRequirement = (clbResult, cefrLevel, languageRequirement) => 
   if (standard === 'CEFR') {
     if (typeof level === 'string') {
     // Handle format like 'B1', 'B2', etc. - check if user meets minimum
-    const { listening, speaking, reading, writing } = formData.ielts || {};
-    const scores = [listening, speaking, reading, writing].map(s => parseFloat(s) || 0);
-    const average = scores.reduce((sum, score) => sum + score, 0)/4;
-    return level.includes(average);
-
+    const requiredCefrNumeric = cefrToNumeric(level);
+    const userCefrNumeric = cefrToNumeric(cefrLevel);
+    return userCefrNumeric >= requiredCefrNumeric;
     }
   }
-
+  
   return true;
 };
 
@@ -492,7 +489,8 @@ const checkSalaryRequirement = (userSalary, salaryCurrency, workExperienceReq) =
  * Check Worker Programs (both Skilled Worker and High Professional)
  */
 const checkWorkerPrograms = (programs, formData) => {
-  const workerPrograms = programs.filter(p => ['Skilled Worker', 'High Professional'].includes(p.category)
+  const workerPrograms = programs.filter(p => 
+    ['Skilled Worker', 'High Professional'].includes(p.category)
 );
 
 const eligiblePrograms = [];
@@ -607,14 +605,151 @@ workerPrograms.forEach(program => {
       }
     }
   }
-
-  // Handle direct yearsOfWork and maxYearsOfWork properties (for specific programs like us-eb3-otherWorkers)
-  if (req.yearsOfWork !== undefined) {
-    if (parseInt(formData.workExperience) < req.yearsOfWork) {
-      
+  // Language requirements (updated to handle standardised format and Canadian variants)
+  if (program.isPointsBased) {
+    //Points-based programs: check minimumRequirements
+    if (req.minimumRequirements?.language?.english) {
+      if (!checkLanguageRequirement(clbResult, cefrLevel, req.minimumRequirements.language.english)) {
+        eligible = false;
+        const langReq = req.minimumRequirements.language.english;
+        if (langReq.levelToSkill) {
+          //Type 3: Individual skill requirements
+          const skillReqs = Object.entries(langReq.levelToSkill)
+            .map(([skill, level]) => `${skill} : ${level}`)
+            .join(', ');
+          notes.push(`English language requirements not met - required: ${skillReqs}`);
+        } else if (langReq.level) {
+          //Type 1: Single minimum level
+          notes.push(`English language requirement not met - minimum ${langReq.level} required`);
+        } else {
+          notes.push(`English language requirement not met`);
+        }
+      }
     }
   }
 
+  //Salary requirements
+  if (req.workExperience?.salary) {
+    if (!checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.workExperience)) {
+      eligible = false;
+      notes.push(`Salary requirement not met`);
+    }
+  }
+
+  //Check salary requirements for options (like Ireland CSEP)
+  if (req.options) {
+    let salaryMet = true;
+    if (req.options.option1?.workExperience?.salary) {
+      if (!checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.options.option1.workExperience)) {
+        salaryMet = false;
+      }
+    }
+    if (req.options.option2?.workExperience?.salary && !salaryMet) {
+      if (!checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.options.option2.workExperience)) {
+        salaryMet = false;
+      }
+    }
+    if (!salaryMet) {
+      eligible = false;
+      notes.push(`Salary requirement not met for any option`);
+    }
+  }
+  // Points calculation for Canadian programs ONLY AFTER meeting minimum requirements
+  if (program.isPointsBased && eligible) {
+    if (req.minimumRequirements && req.selectionFactors) {
+      //Age points
+      if (req.selectionFactors.age && agePoints[program.id.includes('fswp') ? 'federalSkilledWorker' : 'selfEmployed']) {
+        const agePointsTable = agePoints[program.id.includes('fswp') ? 'federalSkilledWorker' : 'selfEmployed'];
+        points += agePointsTable[parseInt(formData.age)] || 0;
+      }
+
+      //Education points
+      if (req.selectionFactors.education && educationPoints[program.id.includes('fswp') ? 'federalSkilledWorker' : 'selfEmployed']) {
+        const educationPointsTable = educationPoints[program.id.includes('fswp') ? 'federalSkilledWorker' : 'selfEmployed'];
+        points += educationPointsTable[formData.education] || 0;
+      }
+
+      //Work experience points
+      if (req.selectionFactors.workExperience && workExperiencePoints[program.id.includes('fswp') ? 'federalSkilledWorker' : 'selfEmployed']) {
+        const workExperiencePointsTable = workExperiencePoints[program.id.includes('fswp') ? 'federalSkilledWorker' : 'selfEmployed'];
+        points += workExperiencePointsTable[parseInt(formData.workExperience)] || 0;
+      }
+
+      //Language points - Updated for Canadian programs with levelToPoints format
+      if (req.selectionFactors.language?.english) {
+        const langReq = req.selectionFactors.language.english;
+
+        //Handle levelToPoints format
+        if (langReq.levelToPoints) {
+          const userCLBKey = `CLB${clbResult.overall}`;
+          const languagePoints = langReq.levelToPoints[userCLBKey] || 0;
+          points += languagePoints;
+        }
+      }
+      //Check if meets minmum points
+      if (points < req.selectionFactors.minPointsRequired) {
+        eligible = false;
+        notes.push(`Minimum ${req.selectionFactors.minPointsRequired} points required for ${program.name}, you have ${points}`);
+      }
+    }
+  }
+  
+  if (eligible) {
+    eligiblePrograms.push({
+      ...program,
+      points: program.isPointsBased ? points : "Not a Points-based program",
+      notes: notes.length > 0 ? notes : null
+    });
+  }
 });
 
-}
+return eligiblePrograms;
+};
+
+/**
+ * ==========================================
+ * MAIN ELIGIBILITY CALCULATION FUNCTION
+ * ==========================================
+ */
+export const calculateEligibility = (formData) => {
+  //Calculate lanaguage standards
+  const clbResult = calculateCLBLevel(formData.ielts || {});
+  const cefrLevel = calculateCEFRLevel(formData.ielts || {});
+
+  //Combine all programs from different countries
+  const allPrograms = [
+    ...canadaPrograms,
+    ...ukPrograms,
+    ...usaPrograms,
+    ...irelandPrograms
+  ];
+
+  let eligiblePrograms = [];
+
+  //Step 1: Check Additional Options Programs 
+  // (Graudate, Investments, Entrepreneur, Extraodinary Ability)
+  eligiblePrograms = eligiblePrograms.concat(checkGraduateStudentPrograms(allPrograms, formData));
+  eligiblePrograms = eligiblePrograms.concat(checkEntrepreneurPrograms(allPrograms, formData));
+  eligiblePrograms = eligiblePrograms.concat(checkInvestmentPrograms(allPrograms, formData));
+  eligiblePrograms = eligiblePrograms.concat(checkExtraordinaryAbilityPrograms(allPrograms, formData));
+
+  //Step 2: Check Worker Programs (Skilled Worker, High Professional)
+  eligiblePrograms = eligiblePrograms.concat(checkWorkerPrograms(allPrograms, formData));
+
+  //Add language calculation results to all eligible programs
+  eligiblePrograms = eligiblePrograms.map(program => ({
+    ...program,
+    userCLB: clbResult.overall,
+    userCEFR: cefrLevel
+  }));
+
+  //Sort by country and then by points
+  eligiblePrograms.sort((a, b) => {
+    if (a.country === b.country) {
+      return (b.points || 0) - (a.points || 0);
+    }
+    return a.country.localeCompare(b.country);
+  });
+
+  return eligiblePrograms;
+};
