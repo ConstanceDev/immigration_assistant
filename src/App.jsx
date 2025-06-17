@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import ProfileForm from './components/ProfileForm';
 import ResultsList from './components/ResultsList';
-import { immigrationPrograms } from './data/immigrationPrograms';
 import { calculateEligibility } from './utils/eligibilityCalculator';
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
 
   const handleSubmit = (formData) => {
-    const eligiblePrograms = calculateEligibility(formData, immigrationPrograms);
+    const eligiblePrograms = calculateEligibility(formData);
     setResults(eligiblePrograms);
     setShowResults(true);
     
@@ -22,9 +21,21 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        <header className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-700">去哪里 (Where to Go)</h1>
-          <p className="text-gray-600 mt-2">Find the perfect immigration pathway for your profile</p>
+        {/* Header with logo and navigation */}
+        <header className="flex justify-between items-center mb-8">
+          <div className="flex items-center">
+            <div className="bg-green-600 text-white rounded-lg w-12 h-12 flex items-center justify-center mr-4">
+              <span className="text-xl font-bold">🏠</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-green-700">WHERE TO GO</h1>
+              <p className="text-sm text-gray-600">FIND THE PERFECT IMMIGRATION PATHWAY FOR YOUR PROFILE</p>
+            </div>
+          </div>
+          <div className="flex space-x-4 text-sm">
+            <a href="#" className="text-gray-600 hover:text-gray-800">Profile</a>
+            <a href="#" className="text-gray-600 hover:text-gray-800">Contact</a>
+          </div>
         </header>
 
         <ProfileForm onSubmit={handleSubmit} />
