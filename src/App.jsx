@@ -19,40 +19,60 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header with logo and navigation */}
-        <header className="flex justify-between items-center mb-8">
-          <div className="flex items-center">
-            <div className="bg-green-600 text-white rounded-lg w-12 h-12 flex items-center justify-center mr-4">
-              <span className="text-xl font-bold">🏠</span>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center space-x-3">
+              <img src="/logo.svg" alt="WHERE TO GO" className="h-8 w-8" />
+              <span className="text-lg font-medium text-gray-900">WHERE TO GO</span>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-green-700">WHERE TO GO</h1>
-              <p className="text-sm text-gray-600">FIND THE PERFECT IMMIGRATION PATHWAY FOR YOUR PROFILE</p>
-            </div>
+            
+            {/* Navigation */}
+            <nav className="flex space-x-8">
+              <a href="#" className="text-gray-700 hover:text-gray-900 text-sm font-medium">Profile</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900 text-sm font-medium">Contact</a>
+            </nav>
           </div>
-          <div className="flex space-x-4 text-sm">
-            <a href="#" className="text-gray-600 hover:text-gray-800">Profile</a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">Contact</a>
-          </div>
-        </header>
+        </div>
+      </header>
 
+      {/* Hero Section */}
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <img src="/header-logo.svg" alt="WHERE TO GO" className="mx-auto h-20 mb-6" />
+            <h1 className="text-4xl font-bold text-green-700 mb-2">WHERE TO GO</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              FIND THE PERFECT IMMIGRATION PATHWAY FOR YOUR PROFILE
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <ProfileForm onSubmit={handleSubmit} />
 
         {showResults && (
-          <div id="results-section" className="bg-white rounded-lg shadow-md p-6 mt-8">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">Your Immigration Options</h2>
+          <div id="results-section" className="mt-8">
             <ResultsList results={results} />
           </div>
         )}
-
-        <footer className="mt-12 text-center text-gray-500 text-sm">
-          <p>© 2025 去哪里 (Where to Go)</p>
-          <p className="mt-1">This tool provides general guidance only and is not a substitute for professional immigration advice.</p>
-          <p className="mt-1">Developed by Miss Wig. All rights reserved.</p>
-        </footer>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-sm text-gray-500">
+            <p>© 2025 去哪里 (Where to Go)</p>
+            <p className="mt-1">This tool provides general guidance only and is not a substitute for professional immigration advice.</p>
+            <p className="mt-1">Developed by Miss Wig. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

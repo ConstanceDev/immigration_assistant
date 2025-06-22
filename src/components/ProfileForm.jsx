@@ -60,7 +60,7 @@ const ProfileForm = ({ onSubmit }) => {
   };
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value, checked } = event.target;
     
     // Clear error when user starts typing
     if (errors[name]) {
@@ -791,4 +791,4 @@ const ProfileForm = ({ onSubmit }) => {
   );
 };
 
-export default ProfileForm;
+export default ProfileForm
