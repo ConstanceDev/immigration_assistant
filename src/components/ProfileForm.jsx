@@ -1,47 +1,46 @@
 import React, { useState } from 'react';
 import { 
-  educationOptions, 
+  educationOptions,
   jobTypeOptions,
   currencyOptions,
   ieltsScoreOptions,
   workLocationOptions,
-  workExperiencePoints,
   extraordinaryAbilityOptions,
   getUniversitiesByGraduationDate
 } from '../data/immigrationRequirements';
 
 const ProfileForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    //Basics
+    // Basics
     name: '',
     age: '',
     email: '',
-
-    //Education
+    
+    // Education
     education: '',
     graduationDate: '',
     university: '',
-
-    //Professional Experience
+    
+    // Professional Experience
     workExperience: '',
     isPaidWork: '',
-    workLocation: '',
+    workLocation: [],
     profession: '',
-    salaryCurrency: '',
+    salaryCurrency: 'USD',
     annualSalary: '',
     
-    //Lanaguage Ability
+    // Language Ability
     ielts: {
       listening: '',
       speaking: '',
       reading: '',
       writing: ''
     },
-
-    //Additional Options
+    
+    // Additional Options
     higherEducation: null,
     extraordinaryAbility: null,
-    extraordinaryAchievement: [],
+    extraordinaryAchievements: [],
     investments: null,
     investmentBudget: '',
     netWorth: '',
@@ -62,14 +61,14 @@ const ProfileForm = ({ onSubmit }) => {
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
-    //Clear error when user starts typing
+    
+    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
 
     if (name.startsWith('ielts.')) {
-      const skill = name.split('')[1];
+      const skill = name.split('.')[1];
       setFormData(prev => ({
         ...prev,
         ielts: {
@@ -84,16 +83,16 @@ const ProfileForm = ({ onSubmit }) => {
           workLocation: [...prev.workLocation, value]
         }));
       } else {
-        setFormData (prev => ({
+        setFormData(prev => ({
           ...prev,
           workLocation: prev.workLocation.filter(loc => loc !== value)
         }));
       }
     } else if (name === 'extraordinaryAchievements') {
       if (checked) {
-        setFormData (prev => ({
+        setFormData(prev => ({
           ...prev,
-          extraordinaryAchievements: [...prev.extraordinaryAchievement, value]
+          extraordinaryAchievements: [...prev.extraordinaryAchievements, value]
         }));
       } else {
         setFormData(prev => ({
@@ -112,40 +111,40 @@ const ProfileForm = ({ onSubmit }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    //Basics validation
+    // Basics validation
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required!';
+      newErrors.name = 'Name is required';
     }
 
     if (!formData.age) {
-      newErrors.age = 'Age is required!';
+      newErrors.age = 'Age is required';
     } else if (!validateNumber(formData.age)) {
       newErrors.age = 'Age must be a number';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required!';
+      newErrors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    //Education validation
+    // Education validation
     if (!formData.education) {
-      newErrors.education = 'Education level is required!';
+      newErrors.education = 'Education level is required';
     }
 
-    //Professional Experience validation
+    // Professional Experience validation
     if (!formData.workExperience) {
-      newErrors.workExperience = 'Years of work experience is required!';
+      newErrors.workExperience = 'Year of work experience is required';
     } else if (!validateNumber(formData.workExperience)) {
-      newErrors.workExperience = 'Years of work experience must be a number';
+      newErrors.workExperience = 'Year of work experience must be a number';
     }
 
     if (!formData.isPaidWork) {
-      newErrors.isPaidWork = 'please select if your job is paid';
+      newErrors.isPaidWork = 'Please select if your job is paid';
     }
 
-    if (!formData.workLocation.length === 0) {
+    if (formData.workLocation.length === 0) {
       newErrors.workLocation = 'Please select at least one work location';
     }
 
@@ -154,27 +153,27 @@ const ProfileForm = ({ onSubmit }) => {
     }
 
     if (!formData.annualSalary) {
-      newErrors.annualSalary = 'Annual salary is required!';
-    } else if (validateNumber(formData.annualSalary)) {
+      newErrors.annualSalary = 'Annual salary is required';
+    } else if (!validateNumber(formData.annualSalary)) {
       newErrors.annualSalary = 'Annual salary must be a number';
     }
 
-    //Language Validation
+    // Language validation - all IELTS scores required
     const ieltsScores = Object.values(formData.ielts);
     if (ieltsScores.some(score => !score)) {
-      newErrors.ielts = 'Please provide all all IELTS scores';
+      newErrors.ielts = 'Please provide all four IELTS scores';
     }
 
-    //Additional options validation
+    // Additional options validation
     if (formData.investments === 'Yes') {
       if (!formData.investmentBudget) {
-        newErrors.investmentBudget = 'Investment budget is required!';
+        newErrors.investmentBudget = 'Investment budget is required';
       } else if (!validateNumber(formData.investmentBudget)) {
         newErrors.investmentBudget = 'Investment budget must be a number';
       }
 
       if (!formData.netWorth) {
-        newErrors.netWorth = 'Net worth is required!';
+        newErrors.netWorth = 'Net worth is required';
       } else if (!validateNumber(formData.netWorth)) {
         newErrors.netWorth = 'Net worth must be a number';
       }
@@ -195,14 +194,14 @@ const ProfileForm = ({ onSubmit }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
-      onsubmit(formData);
+      onSubmit(formData);
     }
   };
 
   const universityOptions = getUniversitiesByGraduationDate(formData.graduationDate);
 
   return (
-    <div classname="bg-white rounded-lg shadow-md p-6 -mb-80">
+    <div className="bg-white rounded-lg shadow-md p-6 mb-8">
       <h2 className="text-xl font-semibold mb-6 text-blue-800 flex items-center">
         <span className="bg-green-100 text-green-700 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm font-bold">
           📋
@@ -211,13 +210,585 @@ const ProfileForm = ({ onSubmit }) => {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Basic Section */}
+        
+        {/* Basics Section */}
         <div className="border-b pb-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Basics</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.name ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Jane Smith"
+              />
+              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            </div>
 
+            {/* Age */}
+            <div>
+              <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
+                Age
+              </label>
+              <input
+                type="text"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.age ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="25"
+              />
+              {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="jane@email.com"
+              />
+              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            </div>
+          </div>
         </div>
-      </form> 
+
+        {/* Education Section */}
+        <div className="border-b pb-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Education</h3>
+          
+          <div className="space-y-4">
+            {/* Education Level */}
+            <div>
+              <label htmlFor="education" className="block text-sm font-medium text-gray-700 mb-1">
+                Education Level
+              </label>
+              <select
+                id="education"
+                name="education"
+                value={formData.education}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.education ? 'border-red-500' : 'border-gray-300'
+                }`}
+              >
+                {educationOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.education && <p className="text-red-500 text-xs mt-1">{errors.education}</p>}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Graduation Date */}
+              <div>
+                <label htmlFor="graduationDate" className="block text-sm font-medium text-gray-700 mb-1">
+                  Graduation Date
+                </label>
+                <input
+                  type="date"
+                  id="graduationDate"
+                  name="graduationDate"
+                  value={formData.graduationDate}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* University */}
+              <div>
+                <label htmlFor="university" className="block text-sm font-medium text-gray-700 mb-1">
+                  University
+                  <span className="text-xs text-gray-500 ml-2">
+                    Select if you graduated from a top-ranking university
+                  </span>
+                </label>
+                <select
+                  id="university"
+                  name="university"
+                  value={formData.university}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={!formData.graduationDate}
+                >
+                  <option value="">Select your university...</option>
+                  {universityOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                {!formData.graduationDate && (
+                  <p className="text-gray-500 text-xs mt-1">Please select graduation date first</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Professional Experience Section */}
+        <div className="border-b pb-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Professional Experience</h3>
+          
+          <div className="space-y-4">
+            {/* Years of work experience */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="workExperience" className="block text-sm font-medium text-gray-700 mb-1">
+                  Years of Work Experience
+                </label>
+                <input
+                  type="text"
+                  id="workExperience"
+                  name="workExperience"
+                  value={formData.workExperience}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.workExperience ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Type..."
+                />
+                {errors.workExperience && <p className="text-red-500 text-xs mt-1">{errors.workExperience}</p>}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Is your job paid?
+                </label>
+                <div className="flex space-x-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="isPaidWork"
+                      value="Yes"
+                      checked={formData.isPaidWork === 'Yes'}
+                      onChange={handleChange}
+                      className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    />
+                    Yes
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="isPaidWork"
+                      value="No"
+                      checked={formData.isPaidWork === 'No'}
+                      onChange={handleChange}
+                      className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    />
+                    No
+                  </label>
+                </div>
+                {errors.isPaidWork && <p className="text-red-500 text-xs mt-1">{errors.isPaidWork}</p>}
+              </div>
+            </div>
+
+            {/* Work location */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Your Work Location
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {workLocationOptions.map(option => (
+                  <label key={option.value} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name="workLocation"
+                      value={option.value}
+                      checked={formData.workLocation.includes(option.value)}
+                      onChange={handleChange}
+                      className="h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    />
+                    <span className="text-sm">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              {errors.workLocation && <p className="text-red-500 text-xs mt-1">{errors.workLocation}</p>}
+            </div>
+
+            {/* Profession */}
+            <div>
+              <label htmlFor="profession" className="block text-sm font-medium text-gray-700 mb-1">
+                What is your profession?
+              </label>
+              <select
+                id="profession"
+                name="profession"
+                value={formData.profession}
+                onChange={handleChange}
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  errors.profession ? 'border-red-500' : 'border-gray-300'
+                }`}
+              >
+                {jobTypeOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.profession && <p className="text-red-500 text-xs mt-1">{errors.profession}</p>}
+            </div>
+
+            {/* Annual salary */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Your Annual Salary
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <select
+                  name="salaryCurrency"
+                  value={formData.salaryCurrency}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {currencyOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  name="annualSalary"
+                  value={formData.annualSalary}
+                  onChange={handleChange}
+                  className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.annualSalary ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Type..."
+                />
+              </div>
+              {errors.annualSalary && <p className="text-red-500 text-xs mt-1">{errors.annualSalary}</p>}
+            </div>
+          </div>
+        </div>
+
+        {/* Language Ability Section */}
+        <div className="border-b pb-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Language Ability</h3>
+          
+          <div>
+            <div className="flex items-center mb-2">
+              <label className="block text-sm font-medium text-gray-700">
+                IELTS Scores
+              </label>
+              <span className="ml-2 text-xs text-gray-500">
+                You can predict your scores if you haven't taken the test
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {['listening', 'speaking', 'reading', 'writing'].map(skill => (
+                <div key={skill}>
+                  <label className="block text-xs font-medium text-gray-600 mb-1 capitalize">
+                    {skill}
+                  </label>
+                  <select
+                    name={`ielts.${skill}`}
+                    value={formData.ielts[skill]}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    {ieltsScoreOptions.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+            </div>
+            {errors.ielts && <p className="text-red-500 text-xs mt-1">{errors.ielts}</p>}
+          </div>
+        </div>
+
+        {/* Additional Options Section */}
+        <div>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Additional Options</h3>
+          
+          <div className="space-y-6">
+            {/* Higher Education */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Do you consider have higher education in your potential immigration destination?
+              </label>
+              <div className="flex space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="higherEducation"
+                    value="Yes"
+                    checked={formData.higherEducation === 'Yes'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="higherEducation"
+                    value="No"
+                    checked={formData.higherEducation === 'No'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+
+            {/* Extraordinary Ability */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Do you consider yourself have extraordinary ability or achievement?
+              </label>
+              <div className="flex space-x-4 mb-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="extraordinaryAbility"
+                    value="Yes"
+                    checked={formData.extraordinaryAbility === 'Yes'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="extraordinaryAbility"
+                    value="No"
+                    checked={formData.extraordinaryAbility === 'No'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  No
+                </label>
+              </div>
+
+              {formData.extraordinaryAbility === 'Yes' && (
+                <div className="ml-4 space-y-2">
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    Tick what meet your achievement:
+                  </p>
+                  {extraordinaryAbilityOptions.map(option => (
+                    <label key={option.value} className="flex items-start space-x-2">
+                      <input
+                        type="checkbox"
+                        name="extraordinaryAchievements"
+                        value={option.value}
+                        checked={formData.extraordinaryAchievements.includes(option.value)}
+                        onChange={handleChange}
+                        className="mt-1 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                      />
+                      <span className="text-sm">{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Investments */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Do you consider make investments in your potential immigration destination?
+              </label>
+              <div className="flex space-x-4 mb-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="investments"
+                    value="Yes"
+                    checked={formData.investments === 'Yes'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="investments"
+                    value="No"
+                    checked={formData.investments === 'No'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  No
+                </label>
+              </div>
+
+              {formData.investments === 'Yes' && (
+                <div className="ml-4 space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      How much is your investment fund budget?
+                    </label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <select
+                        name="investmentCurrency"
+                        value={formData.investmentCurrency || 'USD'}
+                        onChange={handleChange}
+                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {currencyOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="text"
+                        name="investmentBudget"
+                        value={formData.investmentBudget}
+                        onChange={handleChange}
+                        className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          errors.investmentBudget ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="Type..."
+                      />
+                    </div>
+                    {errors.investmentBudget && <p className="text-red-500 text-xs mt-1">{errors.investmentBudget}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Your net worth?
+                    </label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <select
+                        name="netWorthCurrency"
+                        value={formData.netWorthCurrency || 'USD'}
+                        onChange={handleChange}
+                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {currencyOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="text"
+                        name="netWorth"
+                        value={formData.netWorth}
+                        onChange={handleChange}
+                        className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          errors.netWorth ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="Type..."
+                      />
+                    </div>
+                    {errors.netWorth && <p className="text-red-500 text-xs mt-1">{errors.netWorth}</p>}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Start-up */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Do you consider start a business in your potential immigration destination?
+              </label>
+              <div className="flex space-x-4 mb-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="startBusiness"
+                    value="Yes"
+                    checked={formData.startBusiness === 'Yes'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  Yes
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="startBusiness"
+                    value="No"
+                    checked={formData.startBusiness === 'No'}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-blue-500 checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                  />
+                  No
+                </label>
+              </div>
+
+              {formData.startBusiness === 'Yes' && (
+                <div className="ml-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    How much you will fund your business?
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <select
+                      name="businessCurrency"
+                      value={formData.businessCurrency || 'USD'}
+                      onChange={handleChange}
+                      className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      {currencyOptions.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="text"
+                      name="businessFunding"
+                      value={formData.businessFunding}
+                      onChange={handleChange}
+                      className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        errors.businessFunding ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="Type..."
+                    />
+                  </div>
+                  {errors.businessFunding && <p className="text-red-500 text-xs mt-1">{errors.businessFunding}</p>}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div className="text-center pt-6">
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white px-8 py-3 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 font-medium"
+          >
+            Find Your Immigration Options
+          </button>
+        </div>
+      </form>
     </div>
-  )
+  );
 };
 
 export default ProfileForm;

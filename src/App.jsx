@@ -48,9 +48,9 @@ function App() {
         )}
 
         <footer className="mt-12 text-center text-gray-500 text-sm">
-          <p>© 2025 去哪里 (Where to Go) </p>
+          <p>© 2025 去哪里 (Where to Go)</p>
           <p className="mt-1">This tool provides general guidance only and is not a substitute for professional immigration advice.</p>
-          <p className="mt-1"> Developed by Miss Wig. All rights reserved.</p>
+          <p className="mt-1">Developed by Miss Wig. All rights reserved.</p>
         </footer>
       </div>
     </div>

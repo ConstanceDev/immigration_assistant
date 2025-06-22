@@ -523,7 +523,7 @@ export const extraordinaryAbilityOptions = [
 ];
 
 // Helper function to get universities by graduation date
-export const getUniversityByGraduationDate = (graduationDate) => {
+export const getUniversitiesByGraduationDate = (graduationDate) => {
   if (!graduationDate) return [];
 
   const gradDate = new Date(graduationDate);
