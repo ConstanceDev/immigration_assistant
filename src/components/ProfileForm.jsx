@@ -227,7 +227,7 @@ const ProfileForm = ({ onSubmit }) => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                   errors.name ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Jane Smith"
@@ -246,7 +246,7 @@ const ProfileForm = ({ onSubmit }) => {
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
-                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                   errors.age ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="25"
@@ -265,7 +265,7 @@ const ProfileForm = ({ onSubmit }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="jane@email.com"
@@ -290,7 +290,7 @@ const ProfileForm = ({ onSubmit }) => {
                 name="education"
                 value={formData.education}
                 onChange={handleChange}
-                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                   errors.education ? 'border-red-500' : 'border-gray-300'
                 }`}
               >
@@ -315,7 +315,7 @@ const ProfileForm = ({ onSubmit }) => {
                   name="graduationDate"
                   value={formData.graduationDate}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                 />
               </div>
 
@@ -332,7 +332,7 @@ const ProfileForm = ({ onSubmit }) => {
                   name="university"
                   value={formData.university}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                   disabled={!formData.graduationDate}
                 >
                   <option value="">Select your university...</option>
@@ -367,7 +367,7 @@ const ProfileForm = ({ onSubmit }) => {
                   name="workExperience"
                   value={formData.workExperience}
                   onChange={handleChange}
-                  className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                  className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                     errors.workExperience ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Type..."
@@ -387,7 +387,7 @@ const ProfileForm = ({ onSubmit }) => {
                       value="Yes"
                       checked={formData.isPaidWork === 'Yes'}
                       onChange={handleChange}
-                      className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                      className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                     />
                     Yes
                   </label>
@@ -398,7 +398,7 @@ const ProfileForm = ({ onSubmit }) => {
                       value="No"
                       checked={formData.isPaidWork === 'No'}
                       onChange={handleChange}
-                      className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                      className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                     />
                     No
                   </label>
@@ -421,7 +421,7 @@ const ProfileForm = ({ onSubmit }) => {
                       value={option.value}
                       checked={formData.workLocation.includes(option.value)}
                       onChange={handleChange}
-                      className="h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                      className="h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                     />
                     <span className="text-sm">{option.label}</span>
                   </label>
@@ -440,7 +440,7 @@ const ProfileForm = ({ onSubmit }) => {
                 name="profession"
                 value={formData.profession}
                 onChange={handleChange}
-                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                   errors.profession ? 'border-red-500' : 'border-gray-300'
                 }`}
               >
@@ -463,7 +463,7 @@ const ProfileForm = ({ onSubmit }) => {
                   name="salaryCurrency"
                   value={formData.salaryCurrency}
                   onChange={handleChange}
-                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                  className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                 >
                   {currencyOptions.map(option => (
                     <option key={option.value} value={option.value}>
@@ -476,7 +476,7 @@ const ProfileForm = ({ onSubmit }) => {
                   name="annualSalary"
                   value={formData.annualSalary}
                   onChange={handleChange}
-                  className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                  className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                     errors.annualSalary ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Type..."
@@ -511,7 +511,7 @@ const ProfileForm = ({ onSubmit }) => {
                     name={`ielts.${skill}`}
                     value={formData.ielts[skill]}
                     onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                    className="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                   >
                     {ieltsScoreOptions.map(option => (
                       <option key={option.value} value={option.value}>
@@ -544,7 +544,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="Yes"
                     checked={formData.higherEducation === 'Yes'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   Yes
                 </label>
@@ -555,7 +555,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="No"
                     checked={formData.higherEducation === 'No'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   No
                 </label>
@@ -575,7 +575,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="Yes"
                     checked={formData.extraordinaryAbility === 'Yes'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   Yes
                 </label>
@@ -586,7 +586,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="No"
                     checked={formData.extraordinaryAbility === 'No'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   No
                 </label>
@@ -605,7 +605,7 @@ const ProfileForm = ({ onSubmit }) => {
                         value={option.value}
                         checked={formData.extraordinaryAchievements.includes(option.value)}
                         onChange={handleChange}
-                        className="mt-1 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                        className="mt-1 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                       />
                       <span className="text-sm">{option.label}</span>
                     </label>
@@ -627,7 +627,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="Yes"
                     checked={formData.investments === 'Yes'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   Yes
                 </label>
@@ -638,7 +638,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="No"
                     checked={formData.investments === 'No'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   No
                 </label>
@@ -655,7 +655,7 @@ const ProfileForm = ({ onSubmit }) => {
                         name="investmentCurrency"
                         value={formData.investmentCurrency || 'USD'}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                       >
                         {currencyOptions.map(option => (
                           <option key={option.value} value={option.value}>
@@ -668,7 +668,7 @@ const ProfileForm = ({ onSubmit }) => {
                         name="investmentBudget"
                         value={formData.investmentBudget}
                         onChange={handleChange}
-                        className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                        className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                           errors.investmentBudget ? 'border-red-500' : 'border-gray-300'
                         }`}
                         placeholder="Type..."
@@ -686,7 +686,7 @@ const ProfileForm = ({ onSubmit }) => {
                         name="netWorthCurrency"
                         value={formData.netWorthCurrency || 'USD'}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                       >
                         {currencyOptions.map(option => (
                           <option key={option.value} value={option.value}>
@@ -699,7 +699,7 @@ const ProfileForm = ({ onSubmit }) => {
                         name="netWorth"
                         value={formData.netWorth}
                         onChange={handleChange}
-                        className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                        className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                           errors.netWorth ? 'border-red-500' : 'border-gray-300'
                         }`}
                         placeholder="Type..."
@@ -724,7 +724,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="Yes"
                     checked={formData.startBusiness === 'Yes'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   Yes
                 </label>
@@ -735,7 +735,7 @@ const ProfileForm = ({ onSubmit }) => {
                     value="No"
                     checked={formData.startBusiness === 'No'}
                     onChange={handleChange}
-                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#3da461] checked:bg-blue-600 checked:border-blue-600 appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
+                    className="mr-2 h-4 w-4 border border-gray-300 bg-white rounded focus:ring-2 focus:ring-[#47b853] checked:bg-[#ccdfc9] checked:border-[#3b8f6c] appearance-none relative after:content-[''] after:absolute after:left-[3px] after:top-[1px] after:w-[6px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 after:opacity-0 checked:after:opacity-100"
                   />
                   No
                 </label>
@@ -751,7 +751,7 @@ const ProfileForm = ({ onSubmit }) => {
                       name="businessCurrency"
                       value={formData.businessCurrency || 'USD'}
                       onChange={handleChange}
-                      className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461]"
+                      className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853]"
                     >
                       {currencyOptions.map(option => (
                         <option key={option.value} value={option.value}>
@@ -764,7 +764,7 @@ const ProfileForm = ({ onSubmit }) => {
                       name="businessFunding"
                       value={formData.businessFunding}
                       onChange={handleChange}
-                      className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3da461] ${
+                      className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
                         errors.businessFunding ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Type..."
