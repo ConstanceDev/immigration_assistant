@@ -228,11 +228,11 @@ const ProfileForm = ({ onSubmit }) => {
                 value={formData.name}
                 onChange={handleChange}
                 className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                  errors.name ? 'border-red-500' : 'border-gray-300'
+                  errors.name ? 'border-[#e76f51]' : 'border-gray-300'
                 }`}
                 placeholder="Jane Smith"
               />
-              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+              {errors.name && <p className="text-[#e76f51] text-xs mt-1">{errors.name}</p>}
             </div>
 
             {/* Age */}
@@ -247,11 +247,11 @@ const ProfileForm = ({ onSubmit }) => {
                 value={formData.age}
                 onChange={handleChange}
                 className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                  errors.age ? 'border-red-500' : 'border-gray-300'
+                  errors.age ? 'border-[#e76f51]' : 'border-gray-300'
                 }`}
                 placeholder="25"
               />
-              {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
+              {errors.age && <p className="text-[#e76f51] text-xs mt-1">{errors.age}</p>}
             </div>
 
             {/* Email */}
@@ -266,11 +266,11 @@ const ProfileForm = ({ onSubmit }) => {
                 value={formData.email}
                 onChange={handleChange}
                 className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
+                  errors.email ? 'border-[#e76f51]' : 'border-gray-300'
                 }`}
                 placeholder="jane@email.com"
               />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              {errors.email && <p className="text-[#e76f51] text-xs mt-1">{errors.email}</p>}
             </div>
           </div>
         </div>
@@ -291,7 +291,7 @@ const ProfileForm = ({ onSubmit }) => {
                 value={formData.education}
                 onChange={handleChange}
                 className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                  errors.education ? 'border-red-500' : 'border-gray-300'
+                  errors.education ? 'border-[#e76f51]' : 'border-gray-300'
                 }`}
               >
                 {educationOptions.map(option => (
@@ -300,7 +300,7 @@ const ProfileForm = ({ onSubmit }) => {
                   </option>
                 ))}
               </select>
-              {errors.education && <p className="text-red-500 text-xs mt-1">{errors.education}</p>}
+              {errors.education && <p className="text-[#e76f51] text-xs mt-1">{errors.education}</p>}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -368,11 +368,11 @@ const ProfileForm = ({ onSubmit }) => {
                   value={formData.workExperience}
                   onChange={handleChange}
                   className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                    errors.workExperience ? 'border-red-500' : 'border-gray-300'
+                    errors.workExperience ? 'border-[#e76f51]' : 'border-gray-300'
                   }`}
                   placeholder="Type..."
                 />
-                {errors.workExperience && <p className="text-red-500 text-xs mt-1">{errors.workExperience}</p>}
+                {errors.workExperience && <p className="text-[#e76f51] text-xs mt-1">{errors.workExperience}</p>}
               </div>
 
               <div>
@@ -403,7 +403,7 @@ const ProfileForm = ({ onSubmit }) => {
                     No
                   </label>
                 </div>
-                {errors.isPaidWork && <p className="text-red-500 text-xs mt-1">{errors.isPaidWork}</p>}
+                {errors.isPaidWork && <p className="text-[#e76f51] text-xs mt-1">{errors.isPaidWork}</p>}
               </div>
             </div>
 
@@ -427,7 +427,7 @@ const ProfileForm = ({ onSubmit }) => {
                   </label>
                 ))}
               </div>
-              {errors.workLocation && <p className="text-red-500 text-xs mt-1">{errors.workLocation}</p>}
+              {errors.workLocation && <p className="text-[#e76f51] text-xs mt-1">{errors.workLocation}</p>}
             </div>
 
             {/* Profession */}
@@ -441,7 +441,7 @@ const ProfileForm = ({ onSubmit }) => {
                 value={formData.profession}
                 onChange={handleChange}
                 className={`w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                  errors.profession ? 'border-red-500' : 'border-gray-300'
+                  errors.profession ? 'border-[#e76f51]' : 'border-gray-300'
                 }`}
               >
                 {jobTypeOptions.map(option => (
@@ -450,7 +450,7 @@ const ProfileForm = ({ onSubmit }) => {
                   </option>
                 ))}
               </select>
-              {errors.profession && <p className="text-red-500 text-xs mt-1">{errors.profession}</p>}
+              {errors.profession && <p className="text-[#e76f51] text-xs mt-1">{errors.profession}</p>}
             </div>
 
             {/* Annual salary */}
@@ -477,12 +477,12 @@ const ProfileForm = ({ onSubmit }) => {
                   value={formData.annualSalary}
                   onChange={handleChange}
                   className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                    errors.annualSalary ? 'border-red-500' : 'border-gray-300'
+                    errors.annualSalary ? 'border-[#e76f51]' : 'border-gray-300'
                   }`}
                   placeholder="Type..."
                 />
               </div>
-              {errors.annualSalary && <p className="text-red-500 text-xs mt-1">{errors.annualSalary}</p>}
+              {errors.annualSalary && <p className="text-[#e76f51] text-xs mt-1">{errors.annualSalary}</p>}
             </div>
           </div>
         </div>
@@ -522,7 +522,7 @@ const ProfileForm = ({ onSubmit }) => {
                 </div>
               ))}
             </div>
-            {errors.ielts && <p className="text-red-500 text-xs mt-1">{errors.ielts}</p>}
+            {errors.ielts && <p className="text-[#e76f51] text-xs mt-1">{errors.ielts}</p>}
           </div>
         </div>
 
@@ -669,12 +669,12 @@ const ProfileForm = ({ onSubmit }) => {
                         value={formData.investmentBudget}
                         onChange={handleChange}
                         className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                          errors.investmentBudget ? 'border-red-500' : 'border-gray-300'
+                          errors.investmentBudget ? 'border-[#e76f51]' : 'border-gray-300'
                         }`}
                         placeholder="Type..."
                       />
                     </div>
-                    {errors.investmentBudget && <p className="text-red-500 text-xs mt-1">{errors.investmentBudget}</p>}
+                    {errors.investmentBudget && <p className="text-[#e76f51] text-xs mt-1">{errors.investmentBudget}</p>}
                   </div>
 
                   <div>
@@ -700,12 +700,12 @@ const ProfileForm = ({ onSubmit }) => {
                         value={formData.netWorth}
                         onChange={handleChange}
                         className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                          errors.netWorth ? 'border-red-500' : 'border-gray-300'
+                          errors.netWorth ? 'border-[#e76f51]' : 'border-gray-300'
                         }`}
                         placeholder="Type..."
                       />
                     </div>
-                    {errors.netWorth && <p className="text-red-500 text-xs mt-1">{errors.netWorth}</p>}
+                    {errors.netWorth && <p className="text-[#e76f51] text-xs mt-1">{errors.netWorth}</p>}
                   </div>
                 </div>
               )}
@@ -765,12 +765,12 @@ const ProfileForm = ({ onSubmit }) => {
                       value={formData.businessFunding}
                       onChange={handleChange}
                       className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#47b853] ${
-                        errors.businessFunding ? 'border-red-500' : 'border-gray-300'
+                        errors.businessFunding ? 'border-[#e76f51]' : 'border-gray-300'
                       }`}
                       placeholder="Type..."
                     />
                   </div>
-                  {errors.businessFunding && <p className="text-red-500 text-xs mt-1">{errors.businessFunding}</p>}
+                  {errors.businessFunding && <p className="text-[#e76f51] text-xs mt-1">{errors.businessFunding}</p>}
                 </div>
               )}
             </div>
