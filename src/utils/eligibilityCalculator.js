@@ -165,7 +165,7 @@ const checkExtraodinayAbility = (userAchievements, requiredOptions, minimumRequi
  * Check Graduate/Student programs
  */
 const checkGraduateStudentPrograms = (programs, formData) => {
-  if (!formData.higherEducation) return [];
+  if (formData.higherEducation !== 'Yes') return [];
 
   const graduatePrograms = programs.filter(p => p.category === 'Graduate/Student');
   const eligiblePrograms = [];
@@ -521,8 +521,8 @@ workerPrograms.forEach(program => {
   //Education requirements
   if (program.isPointsBased) {
     // Points-based programs: check minimumRequirements
-    if (req.minimumRequirements?.education?.level || req.minimumRequirements?.eduction?.level) {
-      const educationLevel = req.minimumRequirements?.education?.level || req.minimumRequirements?.eduction?.level;
+    if (req.minimumRequirements?.education?.level || req.minimumRequirements?.education?.level) {
+      const educationLevel = req.minimumRequirements?.education?.level || req.minimumRequirements?.education?.level;
       if (!checkEducationRequirement(formData.education, educationLevel)) {
         eligible = false;
         notes.push('Education requirement not met');

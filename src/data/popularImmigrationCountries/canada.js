@@ -39,7 +39,7 @@ export const canadaPrograms = [
                 }
             },
 
-            eduction: {
+            education: {
                 level: [
                     'oneYearTwelve', 
                     'oneYearThirteen', 
