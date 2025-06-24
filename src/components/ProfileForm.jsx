@@ -203,9 +203,6 @@ const ProfileForm = ({ onSubmit }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-8">
       <h2 className="text-xl font-semibold mb-6 text-[#414141] flex items-center">
-        <span className="bg-green-100 text-green-700 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm font-bold">
-          📋
-        </span>
         Your Profile
       </h2>
 

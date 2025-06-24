@@ -40,15 +40,9 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-white">
+      <div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <img src="/header-logo.svg" alt="WHERE TO GO" className="mx-auto h-20 mb-6" />
-            <h1 className="text-4xl font-bold text-green-700 mb-2">WHERE TO GO</h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              FIND THE PERFECT IMMIGRATION PATHWAY FOR YOUR PROFILE
-            </p>
-          </div>
+            <img src="/where-to-go-logo-paper.png" alt="Header" className="mx-auto h-70 px-4" />
         </div>
       </div>
 

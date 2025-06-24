@@ -72,8 +72,13 @@ body {
   color: #374151;
 }
 
+input, select, textarea {
+  color-scheme: light !important;
+}
+
 /* Form inputs and selects */
 .form-input, .form-select {
+  color-scheme: light;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 400;
   font-size: 0.875rem;
