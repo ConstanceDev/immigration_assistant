@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useMemo } from 'react';
 
 const ProgramTypeLabel = ({ isPointsBased }) => (
-    <span className={`text-xs px-2 py-1 rounded-fill ml-2 font-mono ${
+    <span className={`text-xs px-2 py-1 rounded-full ml-2 font-mono ${
         isPointsBased
         ? 'bg-purple-100 text-purple-800'
         : 'bg-blue-100 text-blue-800'
@@ -17,7 +17,7 @@ const CountryFlag = ({ country }) => (
                     ${country === 'Canada' ? 'bg-red-100 text-red-500' :
                       country === 'USA' ? 'bg-blue-100 text-blue-500' :
                       country === 'United Kingdom' ? 'bg-blue-100 text-blue-500' :
-                      country === 'Iredland' ? 'bg-green-100 text-green-500' :
+                      country === 'Ireland' ? 'bg-green-100 text-green-500' :
                       'bg-gray-100 text-gray-500'
                     }`}>
                 {country === 'Canada' ? '🇨🇦' :
@@ -138,7 +138,7 @@ const FilterBar = ({ countries, onFilterChange, activeFilter }) => {
 };
 
 const ResultsList = ({ results }) => {
-    const [filter, setFilter] = useState(false);
+    const [filter, setFilter] = useState('all');
 
     const countries = useMemo(() => {
         if (!results || results.length === 0)
@@ -147,7 +147,7 @@ const ResultsList = ({ results }) => {
         return [...new Set(results.map(program => program.country))];
     }, [results]);
 
-    const filterResults = useMemo(() => {
+    const filteredResults = useMemo(() => {
         if(!results) return [];
         if(filter === 'all') return results;
 
@@ -174,7 +174,7 @@ const ResultsList = ({ results }) => {
                 activeFilter={filter}
              />
              <div className="space-y-4">
-                {filterResults.map((program, index) => (
+                {filteredResults.map((program, index) => (
                     <ProgramCard 
                         key={`${program.country}-${program.name}-${index}`}
                         program={program}
@@ -183,7 +183,7 @@ const ResultsList = ({ results }) => {
              </div>
 
              <div className="mt-6 text-sm text-gray-500 text-center font-mono">
-                Found {filterResults.length} matching programs out of {results.length} total.
+                Found {filteredResults.length} matching programs out of {results.length} total.
              </div>
         </>
     );

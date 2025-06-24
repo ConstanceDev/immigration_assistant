@@ -470,7 +470,7 @@ const checkLanguageRequirement = (clbResult, cefrLevel, languageRequirement) => 
  * Check salary requirements with range support
  */
 const checkSalaryRequirement = (userSalary, salaryCurrency, workExperienceReq) => {
-  if (!workExperienceReq.salary) return true;
+  if (!workExperienceReq?.salary) return true;
 
   const salaryReq = workExperienceReq.salary;
   const convertedSalary = convertCurrency(
@@ -521,7 +521,7 @@ workerPrograms.forEach(program => {
   //Education requirements
   if (program.isPointsBased) {
     // Points-based programs: check minimumRequirements
-    if (req.minimumRequirements?.education?.level || req.minimumRequirements?.education?.level) {
+    if (req.minimumRequirements?.education?.level || req.minimumRequirements?.eduction?.level) {
       const educationLevel = req.minimumRequirements?.education?.level || req.minimumRequirements?.eduction?.level;
       if (!checkEducationRequirement(formData.education, educationLevel)) {
         eligible = false;
@@ -539,10 +539,10 @@ workerPrograms.forEach(program => {
   }
 
   //Check options for programs like EB-2A
-  if (req.points) {
+  if (req.options) {
     let meetsAnyOption = false;
 
-    if (req.options.option) {
+    if (req.options.option1) {
       const option1Met = checkEducationRequirement(formData.education, req.options.option1.education?.level);
       if (option1Met) meetsAnyOption = true;
     }
@@ -570,7 +570,7 @@ workerPrograms.forEach(program => {
     }
 
     //Paid work requirement for points-based programs
-    if (req.minimumRequirements?.workExperience?.isPaidWork && formData.isPaidWork !== 'yes') {
+    if (req.minimumRequirements?.workExperience?.isPaidWork && formData.isPaidWork !== 'Yes') {
       eligible = false;
       notes.push('Paid work experience required');
     }
@@ -592,7 +592,7 @@ workerPrograms.forEach(program => {
     }
 
     //Paid work requirement for non-points-based programs
-    if (req.workExperience.isPaidWork && formData.isPaidWork !== 'yes') {
+    if (req.workExperience?.isPaidWork && formData.isPaidWork !== 'Yes') {
       eligible = false;
       notes.push('Paid work experience required');
     }
@@ -626,6 +626,14 @@ workerPrograms.forEach(program => {
         }
       }
     }
+  } else {
+    // Non-points-based programs: check direct language requirements
+    if (req.language?.english) {
+      if (!checkLanguageRequirement(clbResult, cefrLevel, req.language.english)) {
+        eligible = false;
+        notes.push(`English language requirement not met`);
+      }
+    }
   }
 
   //Salary requirements
@@ -638,18 +646,18 @@ workerPrograms.forEach(program => {
 
   //Check salary requirements for options (like Ireland CSEP)
   if (req.options) {
-    let salaryMet = true;
+    let salaryMet = false;
     if (req.options.option1?.workExperience?.salary) {
-      if (!checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.options.option1.workExperience)) {
-        salaryMet = false;
+      if (checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.options.option1.workExperience)) {
+        salaryMet = true;
       }
     }
     if (req.options.option2?.workExperience?.salary && !salaryMet) {
-      if (!checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.options.option2.workExperience)) {
-        salaryMet = false;
+      if (checkSalaryRequirement(formData.annualSalary, formData.salaryCurrency, req.options.option2.workExperience)) {
+        salaryMet = true;
       }
     }
-    if (!salaryMet) {
+    if (!salaryMet && (req.options.option1?.workExperience?.salary || req.options.option2?.workExperience?.salary)) {
       eligible = false;
       notes.push(`Salary requirement not met for any option`);
     }
