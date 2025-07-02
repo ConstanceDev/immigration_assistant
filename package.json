@@ -1,8 +1,9 @@
 {
   "name": "immigration_assistant",
+  "version": "1.0.0",
+  "license": "PROPRIETARY",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "author": "Miss Wig",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
